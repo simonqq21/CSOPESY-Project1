@@ -13,12 +13,12 @@ int main() {
   if (fp != NULL) {
     printf("File found!");
     while(!feof(fp)) {
-      
+
     }
+    fclose(fp);
   } else {
     printf("%s not found.", fileName);
   }
-  
-  fclose(fp);
+
   return 0;
 }
