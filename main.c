@@ -1,25 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-
-/* Each job has a pid, burst time, and arrival time. Each job also has a
-dynamically allocated array of timeframes. */
-// Each timeframe has a start time and an end time.
-// Sort the jobs based on arrival time in ascending order
-
-typedef struct Timeframe {
-  int start;
-  int end;
-  struct Timeframe * next;
-} Timeframe_t;
-
-typedef struct Process {
-  int pid;
-  int arrival;
-  int burst;
-  Timeframe_t * timeframe
-} Process_t;
-
+#include "types.h"
+#include "fcfs.h"
+// #include "sjf.h"
+// #include "srtf.h"
+// #include "rr.h"
 
 int main() {
 
@@ -40,6 +25,7 @@ int main() {
       //if FCFS
       case 0:
         printf("FCFS algorithm will be performed");
+        fcfs();
         break;
       //if SJF
       case 1:
