@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include "types.h"
 #include "fcfs.h"
-// #include "sjf.h"
-// #include "srtf.h"
-// #include "rr.h"
+#include "sjf.h"
+#include "srtf.h"
+#include "rr.h"
 
 int main() {
 
@@ -25,7 +25,7 @@ int main() {
       //if FCFS
       case 0:
         printf("FCFS algorithm will be performed");
-        fcfs();
+        fcfs(processes);
         break;
       //if SJF
       case 1:
