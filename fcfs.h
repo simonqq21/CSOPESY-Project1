@@ -1,1 +1,1 @@
-extern void fcfs(Process_t *);
+void fcfs(Process_t *);

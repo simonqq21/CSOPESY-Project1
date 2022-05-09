@@ -3,15 +3,21 @@ dynamically allocated array of timeframes. */
 // Each timeframe has a start time and an end time.
 // Sort the jobs based on arrival time in ascending order
 
-typedef struct Timeframe {
+typedef struct {
   int start;
   int end;
   struct Timeframe * next;
 } Timeframe_t;
 
-typedef struct Process {
+typedef struct {
   int pid;
   int arrival;
   int burst;
-
+  Timeframe_t * timeframes;
 } Process_t;
+
+typedef struct {
+  Process_t *head, *tail;
+} ProcessQueue;
+
+ProcessQueue* createProcessQueue(void);
