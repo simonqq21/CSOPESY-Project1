@@ -16,6 +16,7 @@
 //compare if arrival time is >= to time completion
 #include <stdio.h>
 #include "types.h"
+#include "sjf.h"
 
 void sjf(Process_t * processes) {
   printf("sjf\n");
