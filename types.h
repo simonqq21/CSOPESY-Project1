@@ -14,10 +14,13 @@ typedef struct {
   int arrival;
   int burst;
   Timeframe_t * timeframes;
+  struct Process_t *next;
 } Process_t;
 
+
 typedef struct {
-  Process_t *head, *tail;
+  Process_t *head;
+  Process_t *tail;
 } ProcessQueue;
 
 ProcessQueue* createProcessQueue(void);
