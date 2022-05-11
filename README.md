@@ -6,8 +6,10 @@ The program implements a simulation of the following basic CPU scheduling algori
 4. Round-Robin (RR)
 
 ## Authors:
-- Simon Que 
+- Simon Que
 - William Dimaculangan
 
 ## Instructions to Run the Program
-1. 
+1. gcc *.c -o main -Wall
+main.exe
+.main

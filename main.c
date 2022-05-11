@@ -12,8 +12,6 @@ int main() {
 	int nSchedAlgo, processCount, timeSlice; // variables for first line
 	int currPid, currArrvTime, currBurstTime;
 	Process_t processes[100];
-	ProcessQueue * processQueue = createProcessQueue();
-	ProcessQueue * readyQueue = createProcessQueue();
 
 	printf("Input the name of the input text file: ");
 	scanf("%s", fileName);
