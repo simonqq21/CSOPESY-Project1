@@ -10,6 +10,5 @@ The program implements a simulation of the following basic CPU scheduling algori
 - William Dimaculangan
 
 ## Instructions to Run the Program
-1. gcc *.c -o main -Wall
-main.exe
-.main
+1. Type this command on the command line to compile the program `gcc *.c -o main -Wall`
+2. Type `main.exe` for windows or simply `.main` on Linux
