@@ -11,7 +11,7 @@ int main() {
 	FILE *fp; //file pointer
 	int nSchedAlgo, processCount, timeSlice; // variables for first line
 	int currPid, currArrvTime, currBurstTime;
-	Process_t processes[100];
+	Process_t * processes;
 
 	printf("Input the name of the input text file: ");
 	scanf("%s", fileName);
@@ -26,6 +26,7 @@ int main() {
 		while(!feof(fp)) {
 			fscanf(fp, "%d %d %d\n", &currPid, &currArrvTime, &currBurstTime);
 			printf("%d %d %d\n", currPid, currArrvTime, currBurstTime);
+			// Process_t * tP = (P)
 		}
 
 		switch (nSchedAlgo) {

@@ -2,6 +2,25 @@
 #include <stdlib.h>
 #include "types.h"
 
+Timeframe_t * createTimeframe(int start, int end) {
+  Timeframe_t * t = (Timeframe_t *) malloc (sizeof(Timeframe_t*));
+  t->start = start;
+  t->end = end;
+  t->next=NULL;
+  return t;
+}
+
+Process_t * createProcess(int pid, int arrival, int burst) {
+    Process_t * p = (Process_t *) malloc (sizeof(Process_t*));
+    p->pid = pid;
+    p->arrival=arrival;
+    p->burst=burst;
+
+    p->next=NULL;
+    return p;
+}
+
+// int addProcess(Process_t * process, )
 // ProcessQueue* createProcessQueue(ProcessQueue *q) {
 //     ProcessQueue * q = (ProcessQueue*) malloc (sizeof(ProcessQueue));
 //     q -> head = q -> tail = NULL;
@@ -62,3 +81,10 @@
 // int minIndex(ProcessQueue *q) {
 //
 // }
+
+
+
+
+
+// processes from file will be read one at a time
+// once a process is read, it will be inserted in its sorted location in the linked list

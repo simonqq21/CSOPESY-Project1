@@ -18,9 +18,11 @@ typedef struct {
 } Process_t;
 
 
-typedef struct {
-	Process_t *head;
-	Process_t *tail;
-} ProcessQueue;
+// typedef struct {
+// 	Process_t *head;
+// 	Process_t *tail;
+// } ProcessQueue;
 
-ProcessQueue* createProcessQueue(void);
+// void addTimeFrame(Process_t * process, ) {
+//
+// }
