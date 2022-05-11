@@ -22,11 +22,12 @@ int main() {
 	if (fp != NULL) {
 		fscanf(fp, "%d %d %d", &nSchedAlgo, &processCount, &timeSlice);
 		printf("Numbers from file: %d, %d, %d\n", nSchedAlgo, processCount, timeSlice);
-
+	
 		// read each process
 		while(!feof(fp)) {
 			fscanf(fp, "%d %d %d\n", &currPid, &currArrvTime, &currBurstTime);
 			printf("%d %d %d\n", currPid, currArrvTime, currBurstTime);
+			
 		}
 
 		switch (nSchedAlgo) {
