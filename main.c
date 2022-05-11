@@ -70,7 +70,7 @@ int main() {
 			//if SRTF
 			case 2:
 				printf("SRTF algorithm will be performed\n");
-				srtf(processes);
+				sjf(processes);
 			break;
 			//if RR
 			case 3:

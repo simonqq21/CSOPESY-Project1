@@ -95,7 +95,7 @@
 //     }
 // }
 /* Main function that performs SJF */
-void sjf(Process_t *processList, int numProcesses) {
+void sjf(Process_t *processList) {
     printf("SJF ALGO\n");
     // int currTime = 0;
     // Process_t *waitingListHead = malloc(sizeof(Process_t));
