@@ -20,7 +20,6 @@ int main() {
 	fp = fopen(fileName, "r");
 
 	if (fp != NULL) {
-	//get number to see if scheduling algo
 		fscanf(fp, "%d %d %d", &nSchedAlgo, &processCount, &timeSlice);
 		printf("Numbers from file: %d, %d, %d\n", nSchedAlgo, processCount, timeSlice);
 
