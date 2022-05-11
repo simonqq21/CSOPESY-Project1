@@ -12,4 +12,4 @@ The program implements a simulation of the following basic CPU scheduling algori
 ## Instructions to Run the Program
 1. gcc *.c -o main -Wall
 main.exe
-.main
+./main

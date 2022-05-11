@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "types.h"
 #include "fcfs.h"
 #include "sjf.h"
@@ -10,11 +11,13 @@ int main() {
 	char fileName[100];
 	FILE *fp; //file pointer
 	int nSchedAlgo, processCount, timeSlice; // variables for first line
-	int currPid, currArrvTime, currBurstTime;
+	int pid, arrival, burst;
 	Process_t * processes;
 
-	printf("Input the name of the input text file: ");
-	scanf("%s", fileName);
+	// printf("Input the name of the input text file: ");
+	// scanf("%s", fileName);
+	// for testing
+	strcpy(fileName, "sample1.txt");
 	fp = fopen(fileName, "r");
 
 	if (fp != NULL) {
@@ -24,10 +27,15 @@ int main() {
 
 		// read each process
 		while(!feof(fp)) {
-			fscanf(fp, "%d %d %d\n", &currPid, &currArrvTime, &currBurstTime);
-			printf("%d %d %d\n", currPid, currArrvTime, currBurstTime);
-			// Process_t * tP = (P)
+			fscanf(fp, "%d %d %d\n", &pid, &arrival, &burst);
+			printf("%d %d %d\n", pid, arrival, burst);
+			Process_t * tP;
+			printf("x");
+			tP = createProcess(pid, arrival, burst);
+
+			processes = insertProcess(processes, tP);
 		}
+		printProcesses(processes);
 
 		switch (nSchedAlgo) {
 			//if FCFS

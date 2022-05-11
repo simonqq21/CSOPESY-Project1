@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include "types.h"
@@ -15,9 +16,66 @@ Process_t * createProcess(int pid, int arrival, int burst) {
     p->pid = pid;
     p->arrival=arrival;
     p->burst=burst;
-
+    p->timeframes=NULL;
     p->next=NULL;
     return p;
+}
+
+void printProcesses(Process_t * processes) {
+  Process_t * current = processes;
+    do {
+      printf("pid=%d, arrival=%d, burst=%d", current->pid, current->arrival, current->burst);
+      current=current->next;
+    } while(current != NULL);
+}
+
+/* insert a process into the linked list of processes sorted according to arrival time
+ascending */
+Process_t * insertProcess(Process_t * processes, Process_t * p) {
+  int newArrival = p->arrival;
+  int firstArrival = processes->arrival;
+  int arrival;
+  printf("%d\n", newArrival);
+  printf("%d\n", firstArrival);
+  printf("%d\n", arrival);
+  // // if processes linked list is empty
+  // if (processes == NULL)
+  //   processes=p;
+  //
+  // // else if new process must be inserted before the head
+  // else if (newArrival < firstArrival) {
+  //   p->next = processes;
+  //   processes = p;
+  // }
+  //
+  // // else, insert the new process before the process with a higher arrival time
+  // else {
+  //   Process_t * current;
+  //   current = processes->next;
+  //   arrival = current->arrival;
+  //   while (current != NULL || arrival<=newArrival) {
+  //     current = current->next;
+  //     arrival = current->arrival;
+  //   }
+  //   if (current != NULL) {
+  //     p->next=current->next;
+  //     current->next=p;
+  //   }
+  // }
+  return processes;
+}
+
+
+
+void addTimeFrameToProcess(Process_t * process, Timeframe_t * timeframe) {
+  if (process->timeframes == NULL)
+    process->timeframes = timeframe;
+  else {
+    Timeframe_t * current = process->timeframes->next;
+    while (current != NULL)
+      current = current->next;
+    current = timeframe;
+  }
 }
 
 // int addProcess(Process_t * process, )
