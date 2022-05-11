@@ -2,5 +2,8 @@
 #include "types.h"
 
 void fcfs(Process_t * processes) {
-	printf("fcfs\n");
+	int time = 0;
+	// while () {
+	//
+	// }
 }

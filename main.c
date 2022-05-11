@@ -43,15 +43,14 @@ int main() {
 			case 0:
 				printf("FCFS algorithm will be performed\n");
 				fcfs(processes);
-				Process_t * tp = popProcessFromBeginning(&processes);
-				printProcess(tp);
-				printProcesses(processes);
-				tp = popProcessFromBeginning(&processes);
-				printProcess(tp);
-				printProcesses(processes);
-				tp = popProcessFromBeginning(&processes);
-				printProcess(tp);
-				printProcesses(processes);
+				Process_t * tp;
+				for (int i=0;i<10;i++) {
+
+					printProcesses(processes);
+					printf("%d\n", getProcessesLength(processes));
+					tp = popProcessFromBeginning(&processes);
+					// printProcess(tp);
+				}
 			break;
 			//if SJF
 			case 1:

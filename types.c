@@ -24,7 +24,8 @@ Process_t * createProcess(int pid, int arrival, int burst) {
 }
 
 void printProcess(Process_t * process) {
-  printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
+  if (process != NULL)
+    printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
 }
 
 void printProcesses(Process_t * processes) {
@@ -86,9 +87,22 @@ Process_t * insertProcess(Process_t ** processes, Process_t * p) {
 }
 
 Process_t * popProcessFromBeginning(Process_t ** processes) {
-  Process_t * p = *processes;
-  *processes = (*processes)->next;
+  Process_t * p = NULL;
+  if (*processes != NULL) {
+     p = *processes;
+    *processes = (*processes)->next;
+  }
   return p;
+}
+
+int getProcessesLength(Process_t * processes) {
+    int count = 0;
+    Process_t * current = processes;
+    while (current != NULL) {
+      current=current->next;
+      count+=1;
+    }
+    return count;
 }
 
 void addTimeFrameToProcess(Process_t * process, Timeframe_t * timeframe) {
