@@ -88,9 +88,12 @@ Process_t * insertProcess(Process_t ** processes, Process_t * p) {
 
 Process_t * popProcessFromBeginning(Process_t ** processes) {
   Process_t * p = NULL;
+  Process_t * next = NULL;
   if (*processes != NULL) {
+    next = (*processes)->next;
+    // printProcess(next);
      p = *processes;
-    *processes = (*processes)->next;
+    *processes = next;
   }
   return p;
 }
