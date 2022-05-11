@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "types.h"
 #include "fcfs.h"
 #include "sjf.h"
@@ -10,13 +11,13 @@ int main() {
 	char fileName[100];
 	FILE *fp; //file pointer
 	int nSchedAlgo, processCount, timeSlice; // variables for first line
-	int currPid, currArrvTime, currBurstTime;
-	Process_t processes[100];
-	ProcessQueue * processQueue = createProcessQueue();
-	ProcessQueue * readyQueue = createProcessQueue();
+	int pid, arrival, burst;
+	Process_t * processes;
 
-	printf("Input the name of the input text file: ");
-	scanf("%s", fileName);
+	// printf("Input the name of the input text file: ");
+	// scanf("%s", fileName);
+	// for testing
+	strcpy(fileName, "sample4.txt");
 	fp = fopen(fileName, "r");
 
 	if (fp != NULL) {
@@ -25,16 +26,31 @@ int main() {
 	
 		// read each process
 		while(!feof(fp)) {
-			fscanf(fp, "%d %d %d\n", &currPid, &currArrvTime, &currBurstTime);
-			printf("%d %d %d\n", currPid, currArrvTime, currBurstTime);
-			
+			fscanf(fp, "%d %d %d\n", &pid, &arrival, &burst);
+
+			Process_t * tP;
+			tP = createProcess(pid, arrival, burst);
+			printf("%d %d %d\n", pid, arrival, burst);
+			// printProcess(tP);
+			processes = insertProcess(&processes, tP);
+			printProcesses(processes);
 		}
+		printProcesses(processes);
 
 		switch (nSchedAlgo) {
 			//if FCFS
 			case 0:
 				printf("FCFS algorithm will be performed\n");
 				fcfs(processes);
+				Process_t * tp = popProcessFromBeginning(&processes);
+				printProcess(tp);
+				printProcesses(processes);
+				tp = popProcessFromBeginning(&processes);
+				printProcess(tp);
+				printProcesses(processes);
+				tp = popProcessFromBeginning(&processes);
+				printProcess(tp);
+				printProcesses(processes);
 			break;
 			//if SJF
 			case 1:
