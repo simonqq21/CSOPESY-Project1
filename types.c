@@ -42,33 +42,30 @@ void printProcesses(Process_t * processes) {
 
 /* insert a process into the linked list of processes sorted according to arrival time
 ascending */
-Process_t * insertProcess(Process_t * processes, Process_t * p) {
+Process_t * insertProcess(Process_t ** processes, Process_t * p) {
   // if processes linked list is empty
-  if (processes == NULL) {
-    processes=p;
+  if (*processes == NULL) {
+    *processes=p;
   }
 
   else {
     int newArrival = p->arrival;
     int newPid = p->pid;
-    int firstArrival = processes->arrival;
-    int firstPid = processes->pid;
+    int firstArrival = (*processes)->arrival;
+    int firstPid = (*processes)->pid;
     int nextArrival;
     int nextPid;
-    // printf("%d\n", newArrival);
-    // printf("%d\n", firstArrival);
-    // printf("%d\n", arrival);
 
     // else if new process must be inserted before the head
     if (newArrival < firstArrival || (newArrival == firstArrival && newPid < firstPid)) {
-      p->next = processes;
-      processes = p;
+      p->next = *processes;
+      *processes = p;
     }
 
     // else, insert the new process before the process with a higher arrival time
     else {
       Process_t * current;
-      current = processes;
+      current = *processes;
       if (current->next != NULL) {
         nextArrival = current->next->arrival;
         nextPid = current->next->pid;
@@ -80,18 +77,19 @@ Process_t * insertProcess(Process_t * processes, Process_t * p) {
           nextPid = current->next->pid;
         }
       }
-
       p->next=current->next;
       current->next=p;
     }
   }
 
-  //
-
-  return processes;
+  return *processes;
 }
 
-
+Process_t * popProcessFromBeginning(Process_t ** processes) {
+  Process_t * p = *processes;
+  *processes = (*processes)->next;
+  return p;
+}
 
 void addTimeFrameToProcess(Process_t * process, Timeframe_t * timeframe) {
   if (process->timeframes == NULL)

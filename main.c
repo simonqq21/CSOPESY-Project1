@@ -33,7 +33,7 @@ int main() {
 			tP = createProcess(pid, arrival, burst);
 			printf("%d %d %d\n", pid, arrival, burst);
 			// printProcess(tP);
-			processes = insertProcess(processes, tP);
+			processes = insertProcess(&processes, tP);
 			printProcesses(processes);
 		}
 		printProcesses(processes);
@@ -43,6 +43,15 @@ int main() {
 			case 0:
 				printf("FCFS algorithm will be performed\n");
 				fcfs(processes);
+				Process_t * tp = popProcessFromBeginning(&processes);
+				printProcess(tp);
+				printProcesses(processes);
+				tp = popProcessFromBeginning(&processes);
+				printProcess(tp);
+				printProcesses(processes);
+				tp = popProcessFromBeginning(&processes);
+				printProcess(tp);
+				printProcesses(processes);
 			break;
 			//if SJF
 			case 1:
