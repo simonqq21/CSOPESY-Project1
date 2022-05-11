@@ -48,37 +48,36 @@ int main() {
 			printf("\n----Printing Processes----\n");
 			printProcesses(processes);
 
-			switch (nSchedAlgo) {
-				//if FCFS
-				case 0:
-					printf("FCFS algorithm will be performed\n");
-					fcfs(processes);
-					Process_t * tp = popProcessFromBeginning(&processes);
-					printProcess(tp);
-					printProcesses(processes);
-					tp = popProcessFromBeginning(&processes);
-					printProcess(tp);
-					printProcesses(processes);
-					tp = popProcessFromBeginning(&processes);
-					printProcess(tp);
-					printProcesses(processes);
-				break;
-				//if SJF
-				case 1:
-					printf("SJF algorithm will be performed\n");
-					sjf(processes, processCount);
-				break;
-				//if SRTF
-				case 2:
-					printf("SRTF algorithm will be performed\n");
-					srtf(processes);
-				break;
-				//if RR
-				case 3:
-					printf("RR algorithm will be performed\n");
-					rr(processes);
-				break;
-			}
+		switch (nSchedAlgo) {
+			//if FCFS
+			case 0:
+				printf("FCFS algorithm will be performed\n");
+				fcfs(processes);
+				// Process_t * tp;
+				// for (int i=0;i<10;i++) {
+				//
+				// 	printProcesses(processes);
+				// 	printf("%d\n", getProcessesLength(processes));
+				// 	tp = popProcessFromBeginning(&processes);
+				// 	printProcess(tp);
+				// }
+			break;
+			//if SJF
+			case 1:
+				printf("SJF algorithm will be performed\n");
+				sjf(processes);
+			break;
+			//if SRTF
+			case 2:
+				printf("SRTF algorithm will be performed\n");
+				srtf(processes);
+			break;
+			//if RR
+			case 3:
+				printf("RR algorithm will be performed\n");
+				rr(processes);
+			break;
+		}
 
 			fclose(fp);
 		} else {
