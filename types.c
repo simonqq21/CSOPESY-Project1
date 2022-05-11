@@ -4,7 +4,8 @@
 #include "types.h"
 
 Timeframe_t * createTimeframe(int start, int end) {
-  Timeframe_t * t = (Timeframe_t *) malloc (sizeof(Timeframe_t*));
+  Timeframe_t * t = NULL;
+  t = (Timeframe_t *) malloc (sizeof(Timeframe_t));
   t->start = start;
   t->end = end;
   t->next=NULL;
@@ -12,7 +13,8 @@ Timeframe_t * createTimeframe(int start, int end) {
 }
 
 Process_t * createProcess(int pid, int arrival, int burst) {
-    Process_t * p = (Process_t *) malloc (sizeof(Process_t*));
+    Process_t * p = NULL;
+    p = (Process_t *) malloc (sizeof(Process_t));
     p->pid = pid;
     p->arrival=arrival;
     p->burst=burst;
@@ -23,6 +25,9 @@ Process_t * createProcess(int pid, int arrival, int burst) {
 
 void printProcesses(Process_t * processes) {
   Process_t * current = processes;
+  if (current == NULL)
+    printf("no processes\n");
+  else
     do {
       printf("pid=%d, arrival=%d, burst=%d", current->pid, current->arrival, current->burst);
       current=current->next;

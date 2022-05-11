@@ -30,10 +30,8 @@ int main() {
 			fscanf(fp, "%d %d %d\n", &pid, &arrival, &burst);
 			printf("%d %d %d\n", pid, arrival, burst);
 			Process_t * tP;
-			printf("x");
 			tP = createProcess(pid, arrival, burst);
-
-			processes = insertProcess(processes, tP);
+			// processes = insertProcess(processes, tP);
 		}
 		printProcesses(processes);
 
