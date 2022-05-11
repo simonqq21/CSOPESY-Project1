@@ -28,10 +28,10 @@ int main() {
 		// read each process
 		while(!feof(fp)) {
 			fscanf(fp, "%d %d %d\n", &pid, &arrival, &burst);
-			printf("%d %d %d\n", pid, arrival, burst);
 			Process_t * tP;
 			tP = createProcess(pid, arrival, burst);
-			// processes = insertProcess(processes, tP);
+			printProcess(tP);
+			processes = insertProcess(processes, tP);
 		}
 		printProcesses(processes);
 

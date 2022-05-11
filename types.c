@@ -23,13 +23,17 @@ Process_t * createProcess(int pid, int arrival, int burst) {
     return p;
 }
 
+void printProcess(Process_t * process) {
+  printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
+}
+
 void printProcesses(Process_t * processes) {
   Process_t * current = processes;
   if (current == NULL)
     printf("no processes\n");
   else
     do {
-      printf("pid=%d, arrival=%d, burst=%d", current->pid, current->arrival, current->burst);
+      printProcess(current);
       current=current->next;
     } while(current != NULL);
 }
@@ -37,16 +41,23 @@ void printProcesses(Process_t * processes) {
 /* insert a process into the linked list of processes sorted according to arrival time
 ascending */
 Process_t * insertProcess(Process_t * processes, Process_t * p) {
-  int newArrival = p->arrival;
-  int firstArrival = processes->arrival;
-  int arrival;
-  printf("%d\n", newArrival);
-  printf("%d\n", firstArrival);
-  printf("%d\n", arrival);
+  if (processes == NULL) {
+    printf("new");
+    processes=p;
+  }
+
+  else {
+    int newArrival = p->arrival;
+    int firstArrival = processes->arrival;
+    int arrival = -1;
+    printf("%d\n", newArrival);
+    printf("%d\n", firstArrival);
+    printf("%d\n", arrival);
+  }
+
   // // if processes linked list is empty
-  // if (processes == NULL)
-  //   processes=p;
-  //
+
+
   // // else if new process must be inserted before the head
   // else if (newArrival < firstArrival) {
   //   p->next = processes;
