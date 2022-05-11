@@ -17,7 +17,7 @@ int main() {
 	// printf("Input the name of the input text file: ");
 	// scanf("%s", fileName);
 	// for testing
-	strcpy(fileName, "sample3.txt");
+	strcpy(fileName, "sample4.txt");
 	fp = fopen(fileName, "r");
 
 	if (fp != NULL) {
@@ -28,10 +28,13 @@ int main() {
 		// read each process
 		while(!feof(fp)) {
 			fscanf(fp, "%d %d %d\n", &pid, &arrival, &burst);
+
 			Process_t * tP;
 			tP = createProcess(pid, arrival, burst);
+			printf("%d %d %d\n", pid, arrival, burst);
 			// printProcess(tP);
 			processes = insertProcess(processes, tP);
+			printProcesses(processes);
 		}
 		printProcesses(processes);
 

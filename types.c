@@ -45,40 +45,49 @@ ascending */
 Process_t * insertProcess(Process_t * processes, Process_t * p) {
   // if processes linked list is empty
   if (processes == NULL) {
-    printf("new");
     processes=p;
   }
 
   else {
     int newArrival = p->arrival;
+    int newPid = p->pid;
     int firstArrival = processes->arrival;
-    int arrival = -1;
+    int firstPid = processes->pid;
+    int nextArrival;
+    int nextPid;
     // printf("%d\n", newArrival);
     // printf("%d\n", firstArrival);
     // printf("%d\n", arrival);
 
     // else if new process must be inserted before the head
-    if (newArrival < firstArrival) {
+    if (newArrival < firstArrival || (newArrival == firstArrival && newPid < firstPid)) {
       p->next = processes;
       processes = p;
+    }
+
+    // else, insert the new process before the process with a higher arrival time
+    else {
+      Process_t * current;
+      current = processes;
+      if (current->next != NULL) {
+        nextArrival = current->next->arrival;
+        nextPid = current->next->pid;
+      }
+      while (current->next != NULL && newArrival >= nextArrival && newPid > nextPid) {
+        current = current->next;
+        if (current->next != NULL) {
+          nextArrival = current->next->arrival;
+          nextPid = current->next->pid;
+        }
+      }
+
+      p->next=current->next;
+      current->next=p;
     }
   }
 
   //
-  // // else, insert the new process before the process with a higher arrival time
-  // else {
-  //   Process_t * current;
-  //   current = processes->next;
-  //   arrival = current->arrival;
-  //   while (current != NULL || arrival<=newArrival) {
-  //     current = current->next;
-  //     arrival = current->arrival;
-  //   }
-  //   if (current != NULL) {
-  //     p->next=current->next;
-  //     current->next=p;
-  //   }
-  // }
+
   return processes;
 }
 
