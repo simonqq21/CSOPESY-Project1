@@ -2,5 +2,5 @@
 #include "types.h"
 
 void fcfs(Process_t * processes) {
-  printf("fcfs\n");
+	printf("fcfs\n");
 }

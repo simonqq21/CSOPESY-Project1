@@ -2,5 +2,5 @@
 #include "types.h"
 
 void rr(Process_t * processes) {
-  printf("rr\n");
+	printf("rr\n");
 }
