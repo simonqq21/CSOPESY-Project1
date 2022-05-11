@@ -19,5 +19,5 @@
 #include "sjf.h"
 
 void sjf(Process_t * processes) {
-  printf("sjf\n");
+	printf("sjf\n");
 }
