@@ -65,7 +65,7 @@ int main() {
 			//if SJF
 			case 1:
 				printf("SJF algorithm will be performed\n");
-				sjf(processes);
+				sjf(processes, processCount);
 			break;
 			//if SRTF
 			case 2:
