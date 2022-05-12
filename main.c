@@ -28,7 +28,7 @@ int main() {
 	// printf("Input the name of the input text file: ");
 	// scanf("%s", fileName);
 	// for testing
-	strcpy(fileName, "sample1.txt");
+	strcpy(fileName, "sjf.txt");
 	fp = fopen(fileName, "r");
 
 	if (fp != NULL) {
@@ -72,7 +72,7 @@ int main() {
 			//if SRTF
 			case 2:
 				printf("SRTF algorithm will be performed\n");
-				sjf(processes);
+				srtf(processes, processCount);
 				break;
 			//if RR
 			case 3:

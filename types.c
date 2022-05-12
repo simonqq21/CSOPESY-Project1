@@ -33,14 +33,19 @@ Process_t * createProcess(int pid, int arrival, int burst) {
 }
 
 void printProcess(Process_t * process) {
+  int waitingTime;
   if (process != NULL) {
-    // printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
-    printf("P[%d] ", process->pid);
+    printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
+    waitingTime = getProcessWaitingTime(process);
+    if (waitingTime >0)
+      printf("P[%d] ", process->pid);
     if (process->timeframes != NULL)
       printTimeframes(process->timeframes);
   }
   // print waiting time
-  printf(" Waiting time: %d", getProcessWaitingTime(process));
+  waitingTime = getProcessWaitingTime(process);
+  if (waitingTime >0)
+    printf(" Waiting time: %d", waitingTime);
   printf("\n");
 }
 
@@ -54,13 +59,17 @@ void printProcesses(Process_t * processes) {
             printProcess(current);
             current=current->next;
         } while(current != NULL);
-        printf("Average waiting time: %d", getAverageWaitingTime(processes));
-        printf("\n");
+        int avgWaitingTime = getAverageWaitingTime(processes);
+        if (avgWaitingTime > 0) {
+          printf("Average waiting time: %d", avgWaitingTime);
+          printf("\n");
+        }
+
     }
 }
 
 /* insert a process into the linked list of processes sorted according to arrival time
-ascending */
+and PID ascending */
 Process_t * insertProcess(Process_t ** processes, Process_t * p) {
     // if processes linked list is empty
     if (*processes == NULL) {
@@ -104,18 +113,42 @@ Process_t * insertProcess(Process_t ** processes, Process_t * p) {
     return *processes;
 }
 
+// pop the first process from a list of processes
 Process_t * popProcessFromBeginning(Process_t ** processes) {
   Process_t * p = NULL;
-  Process_t * next = NULL;
   if (*processes != NULL) {
-    next = (*processes)->next;
-    // printProcess(next);
-     p = *processes;
-    *processes = next;
+    p = *processes;
+    *processes = (*processes)->next;
   }
   return p;
 }
 
+// pop a process from a list of processes given a pid
+Process_t * popProcessWithPid(Process_t ** processes, int pid) {
+  // printf("X");
+  Process_t * current = NULL;
+  Process_t * p = NULL;
+  int nextPid;
+  if (*processes != NULL) {
+    current = *processes;
+    if (current->next != NULL) {
+      nextPid = current->next->pid;
+      printf("%d\n", nextPid);
+      while (nextPid != pid || current->next != NULL) {
+        // current = current->next;
+        nextPid = current->next->pid;
+        printf("%d\n", nextPid);
+        // printf("p");
+      }
+      p = current->next;
+      current->next = current->next->next;
+    }
+  }
+
+  return p;
+}
+
+// get the length of a linked list of processes
 int getProcessesLength(Process_t * processes) {
     int count = 0;
     Process_t * current = processes;
@@ -126,6 +159,7 @@ int getProcessesLength(Process_t * processes) {
     return count;
 }
 
+// add a timeframe to the timeframe linked list of a process
 void addTimeFrameToProcess(Process_t ** process, Timeframe_t * timeframe) {
     if ((*process)->timeframes == NULL)
         (*process)->timeframes = timeframe;
@@ -145,13 +179,14 @@ void addTimeFrameToProcess(Process_t ** process, Timeframe_t * timeframe) {
 //   return currentTimeframe->end;
 // }
 
-// compute waiting time
+// compute waiting time of a process
 int getProcessWaitingTime(Process_t * p) {
   if (p->timeframes != NULL)
     return p->timeframes->start - p->arrival;
   return -1;
 }
 
+// get average waiting time of a linked list of processes
 int getAverageWaitingTime(Process_t * p) {
   Process_t * current = p;
   int sum = 0;
@@ -227,10 +262,6 @@ int getAverageWaitingTime(Process_t * p) {
 // int minIndex(ProcessQueue *q) {
 //
 // }
-
-
-
-
 
 // processes from file will be read one at a time
 // once a process is read, it will be inserted in its sorted location in the linked list
