@@ -41,11 +41,15 @@ void printProcess(Process_t * process) {
       printf("P[%d] ", process->pid);
     if (process->timeframes != NULL)
       printTimeframes(process->timeframes);
+
+    // print waiting time
+    waitingTime = getProcessWaitingTime(process);
+    if (waitingTime >0)
+      printf(" Waiting time: %d", waitingTime);
   }
-  // print waiting time
-  waitingTime = getProcessWaitingTime(process);
-  if (waitingTime >0)
-    printf(" Waiting time: %d", waitingTime);
+
+  else
+    printf("NULL");
   printf("\n");
 }
 
@@ -130,21 +134,33 @@ Process_t * popProcessWithPid(Process_t ** processes, int pid) {
   Process_t * current = NULL;
   Process_t * p = NULL;
   int nextPid;
+
   if (*processes != NULL) {
-    printf("x");
     current = *processes;
-    if (current->next != NULL) {
+    if (current->pid == pid && current->next == NULL) {
+      // printf("xs");
+      // printProcess(*processes);
+      p=current;
+      *processes = (*processes)->next;
+
+    }
+    else if (current->next != NULL)
+    {
       nextPid = current->next->pid;
-      printf("%d\n", nextPid);
-      while (nextPid != pid || current->next != NULL) {
-        // current = current->next;
+    // printf("%d\n", nextPid);
+
+    // printProcess(current->next);
+      while (nextPid != pid && current->next != NULL) {
+        current = current->next;
         nextPid = current->next->pid;
-        printf("%d\n", nextPid);
-        // printf("p");
+      // printf("%d\n", nextPid);
+      // printf("p");
       }
       p = current->next;
       current->next = current->next->next;
+    // }
     }
+
   }
 
   return p;

@@ -25,7 +25,7 @@ Process_t * srtf(Process_t * processes, int processCount) {
 		printProcesses(readyProcesses);
 		// get the process with the smallest remaining burst time
 		shortestPid = -1;
-		shortestBurst = 0;
+		shortestBurst = 999999;
 		current = readyProcesses;
 		while (current != NULL) {
 			if (current->burst < shortestBurst) {
@@ -34,9 +34,13 @@ Process_t * srtf(Process_t * processes, int processCount) {
 			}
 			current = current->next;
 		}
-
-		executingProcess = popProcessWithPid(&processes, shortestPid);
-	// 	printProcess(executingProcess);
+		// return currently executing process
+		if (executingProcess != NULL) {
+			readyProcesses = insertProcess(&readyProcesses, executingProcess);
+		}
+		printf("short=%d\n", shortestPid);
+		executingProcess = popProcessWithPid(&readyProcesses, shortestPid);
+		printProcess(executingProcess);
 	// 	printProcesses(processes);
 	//
 	//
@@ -46,16 +50,16 @@ Process_t * srtf(Process_t * processes, int processCount) {
 	// 		newtf = createTimeframe(time, time);
 	// 	}
 	//
-	// 	if (executingProcess == NULL) {
-	// 		executingProcess = popProcessFromBeginning(&readyProcesses);
-	//
-	// 	}
-	// 	// execute one time unit of the current executing process
-	// 	else if (executingProcess->burst > 0) {
-	// 		executingProcess->burst--;
-	// 		newtf->end++;
-	// 		time += 1;
-	// 	}
+		if (executingProcess == NULL) {
+			executingProcess = popProcessFromBeginning(&readyProcesses);
+
+		}
+		// execute one time unit of the current executing process
+		// else if (executingProcess->burst > 0) {
+		// 	executingProcess->burst--;
+		// 	newtf->end++;
+			time += 1;
+		// }
 	//
 	// 	// move finished process to finished processes list
 	// 	else if (executingProcess->burst == 0) {
