@@ -13,6 +13,15 @@ Timeframe_t * createTimeframe(int start, int end) {
     return t;
 }
 
+void printTimeframes(Timeframe_t * t) {
+  Timeframe_t * current = t;
+  while (current != NULL) {
+    printf("start time: %d, end time: %d |", t->start, t->end);
+    current=current->next;
+  }
+  printf("\n");
+}
+
 Process_t * createProcess(int pid, int arrival, int burst) {
     Process_t * p = NULL;
     p = (Process_t *) malloc (sizeof(Process_t));
@@ -25,8 +34,11 @@ Process_t * createProcess(int pid, int arrival, int burst) {
 }
 
 void printProcess(Process_t * process) {
-  if (process != NULL)
+  if (process != NULL) {
     printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
+    if (process->timeframes != NULL)
+      printTimeframes(process->timeframes);
+  }
 }
 
 void printProcesses(Process_t * processes) {
@@ -37,7 +49,6 @@ void printProcesses(Process_t * processes) {
     else {
         do {
             printProcess(current);
-            printf("after print process\n");
             current=current->next;
         } while(current != NULL);
 
@@ -112,13 +123,13 @@ int getProcessesLength(Process_t * processes) {
     return count;
 }
 
-void addTimeFrameToProcess(Process_t * process, Timeframe_t * timeframe) {
-    if (process->timeframes == NULL)
-        process->timeframes = timeframe;
+void addTimeFrameToProcess(Process_t ** process, Timeframe_t * timeframe) {
+    if ((*process)->timeframes == NULL)
+        (*process)->timeframes = timeframe;
     else {
-        Timeframe_t * current = process->timeframes->next;
+        Timeframe_t * current = (*process)->timeframes->next;
         while (current != NULL)
-        current = current->next;
+          current = current->next;
         current = timeframe;
     }
 }

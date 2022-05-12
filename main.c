@@ -8,11 +8,11 @@
 #include "rr.h"
 int isValidInput(int processCount, int timeSlice) {
 	int result = 0;
-	if((3 <= processCount && processCount <= 100) && (1 <= timeSlice && timeSlice <= 100)) 
+	if((3 <= processCount && processCount <= 100) && (1 <= timeSlice && timeSlice <= 100))
 		result = 1;
 	else
 		result = 0;
-		
+
 	return result;
 }
 
@@ -22,6 +22,7 @@ int main() {
 	int nSchedAlgo, processCount, timeSlice; // variables for first line
 	int pid, arrival, burst;
 	Process_t * processes;
+	Process_t * resultingProcesses;
 	int validInput = 0;
 	int count = 0;
 	// printf("Input the name of the input text file: ");
@@ -33,7 +34,7 @@ int main() {
 	if (fp != NULL) {
 		fscanf(fp, "%d %d %d", &nSchedAlgo, &processCount, &timeSlice);
 		printf("Numbers from file: %d, %d, %d\n", nSchedAlgo, processCount, timeSlice);
-		validInput = isValidInput(processCount, timeSlice); 
+		validInput = isValidInput(processCount, timeSlice);
 		if(validInput) {
 			while(!feof(fp) && count < processCount) {
 				fscanf(fp, "%d %d %d\n", &pid, &arrival, &burst);
@@ -52,7 +53,8 @@ int main() {
 			//if FCFS
 			case 0:
 				printf("FCFS algorithm will be performed\n");
-				fcfs(processes);
+				resultingProcesses = fcfs(processes, processCount);
+				printProcesses(resultingProcesses);
 				// Process_t * tp;
 				// for (int i=0;i<10;i++) {
 				//
@@ -61,22 +63,22 @@ int main() {
 				// 	tp = popProcessFromBeginning(&processes);
 				// 	printProcess(tp);
 				// }
-			break;
+				break;
 			//if SJF
 			case 1:
 				printf("SJF algorithm will be performed\n");
 				sjf(processes);
-			break;
+				break;
 			//if SRTF
 			case 2:
 				printf("SRTF algorithm will be performed\n");
 				sjf(processes);
-			break;
+				break;
 			//if RR
 			case 3:
 				printf("RR algorithm will be performed\n");
 				rr(processes);
-			break;
+				break;
 		}
 
 			fclose(fp);

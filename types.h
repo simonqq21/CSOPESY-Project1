@@ -24,10 +24,11 @@ typedef struct Process{
 // } ProcessQueue;
 
 Timeframe_t * createTimeframe(int start, int end);
+void printTimeframes(Timeframe_t * t);
 Process_t * createProcess(int pid, int arrival, int burst);
 void printProcesses(Process_t * processes);
 Process_t * insertProcess(Process_t ** processes, Process_t * p);
-void addTimeFrameToProcess(Process_t * process, Timeframe_t * timeframe);
+void addTimeFrameToProcess(Process_t ** process, Timeframe_t * timeframe);
 void printProcess(Process_t * process);
 Process_t * popProcessFromBeginning(Process_t ** processes);
 int getProcessesLength(Process_t * processes);

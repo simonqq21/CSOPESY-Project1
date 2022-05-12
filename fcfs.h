@@ -1,1 +1,1 @@
-void fcfs(Process_t *);
+Process_t * fcfs(Process_t *, int);
