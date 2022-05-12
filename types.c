@@ -14,11 +14,11 @@ Timeframe_t * createTimeframe(int start, int end) {
 }
 
 void printTimeframes(Timeframe_t * t) {
-  Timeframe_t * current = t;
-  while (current != NULL) {
-    printf("start time: %d, end time: %d |", t->start, t->end);
-    current=current->next;
-  }
+    Timeframe_t * current = t;
+    while (current != NULL) {
+        printf("start time: %d, end time: %d |", current->start, current->end);
+        current=current->next;
+    }
 }
 
 Process_t * createProcess(int pid, int arrival, int burst) {
@@ -72,11 +72,14 @@ void printProcesses(Process_t * processes) {
     }
 }
 
+
 /* insert a process into the linked list of processes sorted according to arrival time
 and PID ascending */
 Process_t * insertProcess(Process_t ** processes, Process_t * p) {
     // if processes linked list is empty
+    printf("!!!!Process address: %p\n", *processes);
     if (*processes == NULL) {
+        printf("Inside null\n");
         *processes=p;
     }
 
@@ -87,7 +90,6 @@ Process_t * insertProcess(Process_t ** processes, Process_t * p) {
         int firstPid = (*processes)->pid;
         int nextArrival;
         int nextPid;
-
         // else if new process must be inserted before the head
         if (newArrival < firstArrival || (newArrival == firstArrival && newPid < firstPid)) {
             p->next = *processes;
@@ -105,8 +107,8 @@ Process_t * insertProcess(Process_t ** processes, Process_t * p) {
             while (current->next != NULL && newArrival >= nextArrival && newPid > nextPid) {
                 current = current->next;
                 if (current->next != NULL) {
-                nextArrival = current->next->arrival;
-                nextPid = current->next->pid;
+                    nextArrival = current->next->arrival;
+                    nextPid = current->next->pid;
                 }
             }
             if (current->next != NULL)

@@ -6,6 +6,8 @@
 #include "sjf.h"
 #include "srtf.h"
 #include "rr.h"
+
+/* This function is used to return if the process count or the time slice is a valid input */
 int isValidInput(int processCount, int timeSlice) {
 	int result = 0;
 	if((3 <= processCount && processCount <= 100) && (1 <= timeSlice && timeSlice <= 100))
@@ -21,8 +23,8 @@ int main() {
 	FILE *fp; //file pointer
 	int nSchedAlgo, processCount, timeSlice; // variables for first line
 	int pid, arrival, burst;
-	Process_t * processes;
-	Process_t * resultingProcesses;
+	Process_t *processes = NULL;
+	Process_t *resultingProcesses;
 	int validInput = 0;
 	int count = 0;
 	// printf("Input the name of the input text file: ");
@@ -38,9 +40,13 @@ int main() {
 		if(validInput) {
 			while(!feof(fp) && count < processCount) {
 				fscanf(fp, "%d %d %d\n", &pid, &arrival, &burst);
-				Process_t * tP;
+				printf("----------------------\n");
+				printf("Values read: %d, %d, %d\n", pid, arrival, burst);
+				Process_t *tP = NULL;
 				tP = createProcess(pid, arrival, burst);
+				printf("\n----------\n");
 				printf("HELLO: %d %d %d\n", tP->pid, tP->arrival, tP->burst);
+				printf("----------\n");
 				// printProcess(tP);
 				processes = insertProcess(&processes, tP);
 				printProcesses(processes);
@@ -67,8 +73,8 @@ int main() {
 			//if SJF
 			case 1:
 				printf("SJF algorithm will be performed\n");
-				sjf(processes);
-				break;
+				sjf(processes, processCount);
+			break;
 			//if SRTF
 			case 2:
 				printf("SRTF algorithm will be performed\n");
