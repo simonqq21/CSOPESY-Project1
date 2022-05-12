@@ -78,7 +78,11 @@
 //     }
 // }
 
-/*This function deletes a specific process from the process list */
+/*  This function deletes a specific process from the process list 
+    @param pid the process id to be deleted
+    @param *processList pointer to the head of the list of processes passed to the function
+    @param numProcesses number of processes in the list of processes
+*/
 int deleteProcess(int pid, Process_t *processList, int numProcesses) {
     Process_t *tmp = processList;
     Process_t *nextNode;
@@ -104,16 +108,21 @@ int deleteProcess(int pid, Process_t *processList, int numProcesses) {
     
     return numProcesses;
 }
-/* This function searches the shortest burst process that has already arrived */
+/*  This function searches the shortest burst process that has already arrived
+    @param currTime current unit time of process execution
+    @param *processList pointer to the head of the list of processes passed to the function
+*/
 Process_t *searchArrivedShortestProcess (int currTime, Process_t *processList) {
     Process_t *tmp = processList;
     Process_t *minProcess = NULL;
     int minBurst;
 
     minBurst = tmp->burst;
+    
     //Traverse through the process list
     while (tmp != NULL) {
          //Search for the processes <= current time and insert them to the waiting list, deleting inserted ones from the process list
+        printf("[delete me] P[%d] arrival time: %d, burst time: %d\n", tmp->pid, tmp->arrival, tmp->burst);
         if (tmp->arrival <= currTime && tmp->burst < minBurst) {
             //Allocate memory to be able to copy files if not done yet
             if(minProcess == NULL) {
@@ -136,37 +145,56 @@ Process_t *searchArrivedShortestProcess (int currTime, Process_t *processList) {
 //     }
 // }
 
-/* Main function that performs SJF */
+/*  This function inserts the shortest burst arrived process to another list and 
+    executes by adjusting Timeframe parameters
+    @param process the process to be executed and inserted in list of executed processes
+    @param *executedProcessList pointer to the head of the list of executed processes
+*/
+// void insertAndExecuteProcess(Process_t process, Process_t *executedProcessList) {
+//     // currProcess = searchShortestBurst(waitingList);
+//     // currProcess->timeframes->start = currTime;
+//     // currProcess->timeframes->end = currProcess->timeframes->start + currProcess->burst;
+//     // currTime = currProcess->timeframes->end;
+//     // insertCompleteJobs(currTime);
+//     // numProcesses = numProcesses - 1;
+//     // executedProcessList->next = process;
+
+
+// }
+
+/*  Main function that performs SJF 
+    @param *processList pointer to the head of the list of processes passed to the function
+    @param numProcesses number of processes in the list according to input from file
+*/
 void sjf(Process_t *processList, int numProcesses) {
     int currTime = 0;
     //Process_t *waitingList = malloc(sizeof(Process_t)); //head of waiting list
     Process_t *executedProcessHead = malloc(sizeof(Process_t)); //head of executed
     Process_t *temp;
-    printf("[Delete me] SJF ALGO will be performed\n");
+
+    printf("\n\n-----[Delete me] SJF ALGO will be performed\n");
     printf("[Delete me] Num of processes: %d\n", numProcesses);
 
     if(executedProcessHead == NULL) {
         printf("Memory is not allocated.\n");
     } else {
-        while(numProcesses > 0) {
+        while(numProcesses > 0 && currTime < 10) {
             temp = searchArrivedShortestProcess(currTime, processList);
             if(temp != NULL) {
-                printf("Minprocess: %d", temp->burst);
+                printf("Minprocess: %d\n", temp->burst);
+                insertAndExecuteProcess(temp, executedProcessHead);
                 numProcesses = deleteProcess(temp->pid, processList, numProcesses);
                 printProcesses(processList);
+                printf("-------------\n");
                 //insert to executedProcess (where calculation of time frame is done)
                 //delete the process from the process list, using temp as reference or temp->pid
             } else {
-                printf("[Delete me] No process has arrived yet at time %d.\n", currTime);
+                printf("[Delete me] No process has arrived yet at time %d.\n\n", currTime);
             }
             currTime++;
-            // currProcess = searchShortestBurst(waitingList);
-            // currProcess->timeframes->start = currTime;
-            // currProcess->timeframes->end = currProcess->timeframes->start + currProcess->burst;
-            // currTime = currProcess->timeframes->end;
-            // insertCompleteJobs(currTime);
-            // numProcesses = numProcesses - 1; 
+            
         }
+        printf("\n\n\nNum processes left: %d", numProcesses);
     }
     
 }
