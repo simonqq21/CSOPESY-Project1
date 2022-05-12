@@ -29,22 +29,25 @@ Process_t * fcfs(Process_t * processes, int processCount) {
 			printf("T");
 			newtf = createTimeframe(time, time);
 		}
-		//
-		// if (executingProcess == NULL) {
-		// 	executingProcess = popProcessFromBeginning(&readyProcesses);
-		// }
-		// move finished process to finished processes list
-		// else if (executingProcess->burst == 0) {
-		// 	addTimeFrameToProcess(&executingProcess, newtf);
-		// 	finishedProcesses = insertProcess(&finishedProcesses, executingProcess);
-		// 	executingProcess = popProcessFromBeginning(&readyProcesses);
-		// 	newtf = NULL;
-		// }
+
+		if (executingProcess == NULL) {
+			executingProcess = popProcessFromBeginning(&readyProcesses);
+
+		}
 		// execute one time unit of the current executing process
-		// else if (executingProcess->burst > 0) {
-		// 	executingProcess->burst--;
-		// 	newtf->end++;
-		// }
+		else if (executingProcess->burst > 0) {
+			executingProcess->burst--;
+			newtf->end++;
+		}
+
+		// move finished process to finished processes list
+		else if (executingProcess->burst == 0) {
+			addTimeFrameToProcess(&executingProcess, newtf);
+			finishedProcesses = insertProcess(&finishedProcesses, executingProcess);
+			executingProcess = popProcessFromBeginning(&readyProcesses);
+			newtf = NULL;
+		}
+		printTimeframes(newtf);
 		// current = readyProcesses;
 		// while (current != NULL) {
 		// 	if (current->burst > 0) {
