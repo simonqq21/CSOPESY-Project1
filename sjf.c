@@ -48,68 +48,75 @@
 // }
 
 // /* This function inserts to the waiting list when time is */
-// void insertToWaitList (Process_t *arrivedProcess, int pid) {
-//     Process_t *newProcess = malloc(sizeof(Process_t));
+void insertToWaitList (Process_t *arrivedProcess, Process_t *waitingListHead) {
+    Process_t *newProcess = malloc(sizeof(Process_t));
 
-//     if(newProcess == NULL) {
-//         return 0; //0 for false
-//     } else {
-//         newProcess->pid = pid;
-//         newProcess->arrival = arrival;
-//         newProcess->burst = burst;
-//         newProcess->next = NULL;
-//         Timeframe_t *timeframes = malloc(sizeof(timeframes));
-//         newProcess->timeframes = timeframes; //check
+    if(newProcess == NULL) {
+        return 0; //0 for false
+    } else {
+        *newProcess = *arrivedProcess; //copy the contents
 
-//         //If there is existing tail connect 
-//         if (q->tail != NULL) {
-//             q->tail->next = newProcess; 
-//         }
-//         q->tail = newProcess; //new tail 
+        //If list is empty
+        if(waitingListHead == NULL) {
+            waitingListHead = newProcess;
+            waitingListHead->next = NULL;
+        } else {
 
-//         //If queue is empty
-//         if (q->head == NULL) {
-//             q->head = newProcess; //point to new process
-//         }
-//         return 1; //return true
-//     }
-// }
+        }
+        //If there is existing tail connect 
+        if (q->tail != NULL) {
+            q->tail->next = newProcess; 
+        }
+        q->tail = newProcess; //new tail 
 
-// void searchArrivedProcess (int currTime, Process_t *processList, Process_t *waitingList) {
-//     Process_t *tmp = processList;
-//     while (tmp != NULL) {
-//         if (tmp->arrival <= currTime) {
-//             insertToWaitList(tmp, waitingList);
-//             deleteNodeFromList(processList, tmp->pid);
-//         }
-//         tmp = tmp->next;
-//     }
-// }
+        //If queue is empty
+        if (q->head == NULL) {
+            q->head = newProcess; //point to new process
+        }
+        return 1; //return true
+    }
+}
+
+void searchArrivedProcess (int currTime, Process_t *processList, Process_t *waitingList) {
+    //Search for the processes <= current time and insert them to the waiting list, deleting inserted ones from the process list
+    Process_t *tmp = processList;
+    //Traverse through the process list
+    while (tmp != NULL) {
+        if (tmp->arrival <= currTime) {
+            insertToWaitList(tmp, waitingList);
+            //sortwaitinglist to shortest burst time
+            //then just 
+            //deleteNodeFromList(processList, tmp->pid);
+        }
+        tmp = tmp->next;
+    }
+}
 
 // /* For checking purposes */
-// void printList(Process_t *head) {
-//     Process_t *tmp = head;
-//     while(tmp != NULL) {
-//         printf("Pid: %d, AT: %d, BT: %d\n", tmp->pid, tmp->arrival, tmp->burst);
-//         tmp = tmp->next; 
-//     }
-// }
-/* Main function that performs SJF */
-void sjf(Process_t *processList) {
-    printf("SJF ALGO\n");
-    // int currTime = 0;
-    // Process_t *waitingListHead = malloc(sizeof(Process_t));
-    // Process_t *executedProcessHead = malloc(sizeof(Process_t));
+void printList(Process_t *head) {
+    Process_t *tmp = head;
+    while(tmp != NULL) {
+        printf("Pid: %d, AT: %d, BT: %d\n", tmp->pid, tmp->arrival, tmp->burst);
+        tmp = tmp->next; 
+    }
+}
 
-    // while(numProcesses > 0) {
-    //     searchArrivedProcess(currTime, processList);
-    //     currProcess = searchShortestBurst(waitingList);
-    //     currProcess->timeframes->start = currTime;
-    //     currProcess->timeframes->end = currProcess->timeframes->start + currProcess->burst;
-    //     currTime = currProcess->timeframes->end;
-    //     insertCompleteJobs(currTime);
-    //     numProcesses = numProcesses - 1; 
-    // }
+/* Main function that performs SJF */
+void sjf(Process_t *processList, int numProcesses) {
+    printf("SJF ALGO\n");
+    int currTime = 0;
+    Process_t *waitingListHead = malloc(sizeof(Process_t));
+    Process_t *executedProcessHead = malloc(sizeof(Process_t));
+    printf("Num of processes: %d", numProcesses);
+    while(numProcesses > 0) {
+        searchArrivedProcess(currTime, processList);
+        // currProcess = searchShortestBurst(waitingList);
+        // currProcess->timeframes->start = currTime;
+        // currProcess->timeframes->end = currProcess->timeframes->start + currProcess->burst;
+        // currTime = currProcess->timeframes->end;
+        // insertCompleteJobs(currTime);
+        // numProcesses = numProcesses - 1; 
+    }
 
     
 }
