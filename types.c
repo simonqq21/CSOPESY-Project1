@@ -50,25 +50,29 @@ ascending */
 Process_t * insertProcess(Process_t ** processes, Process_t * p) {
     // if processes linked list is empty
     if (*processes == NULL) {
+        printf("Inside null\n");
         *processes=p;
     }
 
     else {
+        printf("Inside else\n");
         int newArrival = p->arrival;
         int newPid = p->pid;
         int firstArrival = (*processes)->arrival;
         int firstPid = (*processes)->pid;
         int nextArrival;
         int nextPid;
-
+        printf("After assignment Inside else\n");
         // else if new process must be inserted before the head
         if (newArrival < firstArrival || (newArrival == firstArrival && newPid < firstPid)) {
+            printf("Inside if newArrival < firstArrival \n");
             p->next = *processes;
             *processes = p;
         }
 
         // else, insert the new process before the process with a higher arrival time
         else {
+            printf("Inside ELSE OF if newArrival < firstArrival \n");
             Process_t * current;
             current = *processes;
             if (current->next != NULL) {
@@ -78,8 +82,8 @@ Process_t * insertProcess(Process_t ** processes, Process_t * p) {
             while (current->next != NULL && newArrival >= nextArrival && newPid > nextPid) {
                 current = current->next;
                 if (current->next != NULL) {
-                nextArrival = current->next->arrival;
-                nextPid = current->next->pid;
+                    nextArrival = current->next->arrival;
+                    nextPid = current->next->pid;
                 }
             }
             p->next=current->next;
