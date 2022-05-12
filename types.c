@@ -35,10 +35,13 @@ Process_t * createProcess(int pid, int arrival, int burst) {
 
 void printProcess(Process_t * process) {
   if (process != NULL) {
-    printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
+    // printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
+    printf("P[%d] ", process->pid);
     if (process->timeframes != NULL)
       printTimeframes(process->timeframes);
   }
+  // compute waiting time
+  
 }
 
 void printProcesses(Process_t * processes) {

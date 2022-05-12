@@ -38,6 +38,7 @@ Process_t * fcfs(Process_t * processes, int processCount) {
 		else if (executingProcess->burst > 0) {
 			executingProcess->burst--;
 			newtf->end++;
+			time += 1;
 		}
 
 		// move finished process to finished processes list
@@ -48,14 +49,6 @@ Process_t * fcfs(Process_t * processes, int processCount) {
 			newtf = NULL;
 		}
 		printTimeframes(newtf);
-		// current = readyProcesses;
-		// while (current != NULL) {
-		// 	if (current->burst > 0) {
-		//
-		// 	}
-		// 	current = current->next;
-		// }
-		time += 1;
 	}
 
 	printf("\n");
