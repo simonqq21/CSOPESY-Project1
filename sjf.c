@@ -3,6 +3,11 @@
 #include "types.h"
 #include "sjf.h"
 
+
+void initQueue(Queues *q) {
+    q->head = NULL;
+    q->tail = NULL;
+}
 // Process_t *searchShortestBurst (Process_t *head) {
 //     Process_t *tmp = head;
 //     Process_t *minProcessBurst = NULL;
@@ -145,21 +150,58 @@ Process_t *searchArrivedShortestProcess (int currTime, Process_t *processList) {
 //     }
 // }
 
-/*  This function inserts the shortest burst arrived process to another list and 
+/*  This function enqueues the shortest burst arrived process to another list and 
     executes by adjusting Timeframe parameters
     @param process the process to be executed and inserted in list of executed processes
     @param *executedProcessList pointer to the head of the list of executed processes
 */
-// void insertAndExecuteProcess(Process_t process, Process_t *executedProcessList) {
-//     // currProcess = searchShortestBurst(waitingList);
-//     // currProcess->timeframes->start = currTime;
-//     // currProcess->timeframes->end = currProcess->timeframes->start + currProcess->burst;
-//     // currTime = currProcess->timeframes->end;
-//     // insertCompleteJobs(currTime);
-//     // numProcesses = numProcesses - 1;
-//     // executedProcessList->next = process;
+void enqueueAndExecuteProcess(Process_t *process, Queues *queue, int *currTime) {
+    Process_t *newnode = malloc(sizeof(Process_t));
 
+    if(newnode == NULL) {
+        printf("Memory not allocated.\n");
+    } else {
+        //Initialization of node to be enqueued
+        newnode->arrival = process->arrival;
+        newnode->burst = process->burst;
+        newnode->timeframes = process->timeframes;
+        newnode->next = NULL;
 
+        newnode->timeframes->start = *currTime;
+        newnode->timeframes->end = newnode->timeframes->start + newnode->burst;
+        *currTime = newnode->timeframes->end;
+
+        //Previous tail connects to new node
+        if(queue->tail != NULL) {
+            queue->tail->next = newnode;
+        }
+        queue->tail = newnode; //newnode is the new tail
+
+        //If currently no head
+        if (queue->head == NULL) {
+            queue->head = newnode;
+        }
+    }
+}
+
+// /*  This function dequeues a process and returns the process for printing
+//     @param *queue points to the queue
+// */
+// void printExecuted(Queues *queue) {
+//     Process_t *temp = queue->head;
+//     while(queue->head != NULL) {
+//          Process_t result = *temp;
+//         //Save new head of queue
+//         queue->head = queue->head->next;
+//         //if no more nodes
+//         if (queue->head == NULL) {
+//             queue->tail = NULL;
+//         }
+//         free(temp);
+//         printf("P[%d] Start Time: %d End time: %d | Waiting time: %d\n");
+//         printf("Average waiiting time: %f");
+//     }
+   
 // }
 
 /*  Main function that performs SJF 
@@ -169,32 +211,31 @@ Process_t *searchArrivedShortestProcess (int currTime, Process_t *processList) {
 void sjf(Process_t *processList, int numProcesses) {
     int currTime = 0;
     //Process_t *waitingList = malloc(sizeof(Process_t)); //head of waiting list
-    Process_t *executedProcessHead = malloc(sizeof(Process_t)); //head of executed
     Process_t *temp;
-
+    Queues executedQueue;
+    
+    initQueue(&executedQueue); //to store the executed processes
     printf("\n\n-----[Delete me] SJF ALGO will be performed\n");
     printf("[Delete me] Num of processes: %d\n", numProcesses);
 
-    if(executedProcessHead == NULL) {
-        printf("Memory is not allocated.\n");
-    } else {
-        while(numProcesses > 0 && currTime < 10) {
-            temp = searchArrivedShortestProcess(currTime, processList);
-            if(temp != NULL) {
-                printf("Minprocess: %d\n", temp->burst);
-                insertAndExecuteProcess(temp, executedProcessHead);
-                numProcesses = deleteProcess(temp->pid, processList, numProcesses);
-                printProcesses(processList);
-                printf("-------------\n");
-                //insert to executedProcess (where calculation of time frame is done)
-                //delete the process from the process list, using temp as reference or temp->pid
-            } else {
-                printf("[Delete me] No process has arrived yet at time %d.\n\n", currTime);
-            }
-            currTime++;
+    while(numProcesses > 0) {
+        temp = searchArrivedShortestProcess(currTime, processList);
+        if(temp != NULL) {
+            printf("Minprocess: %d\n", temp->burst);
+            enqueueAndExecuteProcess(temp, &executedQueue, &currTime);
+            numProcesses = deleteProcess(temp->pid, processList, numProcesses);
+            printProcesses(processList);
+            printf("-------------\n");
             
+        } else {
+            printf("-------------\n");
+            printf("[Delete me] No process has arrived yet at time %d.\n\n", currTime);
+            printf("-------------\n");
         }
-        printf("\n\n\nNum processes left: %d", numProcesses);
+        currTime++;
+        
     }
+    printf("\n\n\nNum processes left: %d", numProcesses);
+
     
 }
