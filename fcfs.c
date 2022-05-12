@@ -21,12 +21,11 @@ Process_t * fcfs(Process_t * processes, int processCount) {
 				readyProcesses= insertProcess(&readyProcesses, newProcess);
 				processCount--;
 			}
-			printProcesses(readyProcesses);
+			// printProcesses(readyProcesses);
 		}
 
 		// create new timeframe
 		if (newtf == NULL) {
-			printf("T");
 			newtf = createTimeframe(time, time);
 		}
 
@@ -48,10 +47,8 @@ Process_t * fcfs(Process_t * processes, int processCount) {
 			executingProcess = popProcessFromBeginning(&readyProcesses);
 			newtf = NULL;
 		}
-		printTimeframes(newtf);
 	}
 
 	printf("\n");
-	printf("%d", time);
 	return finishedProcesses;
 }

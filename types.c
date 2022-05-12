@@ -19,7 +19,6 @@ void printTimeframes(Timeframe_t * t) {
     printf("start time: %d, end time: %d |", t->start, t->end);
     current=current->next;
   }
-  printf("\n");
 }
 
 Process_t * createProcess(int pid, int arrival, int burst) {
@@ -40,8 +39,9 @@ void printProcess(Process_t * process) {
     if (process->timeframes != NULL)
       printTimeframes(process->timeframes);
   }
-  // compute waiting time
-  
+  // print waiting time
+  printf(" Waiting time: %d", getProcessWaitingTime(process));
+  printf("\n");
 }
 
 void printProcesses(Process_t * processes) {
@@ -54,7 +54,7 @@ void printProcesses(Process_t * processes) {
             printProcess(current);
             current=current->next;
         } while(current != NULL);
-
+        printf("Average waiting time: %d", getAverageWaitingTime(processes));
         printf("\n");
     }
 }
@@ -137,6 +137,35 @@ void addTimeFrameToProcess(Process_t ** process, Timeframe_t * timeframe) {
     }
 }
 
+// int getProcessCompletionTime(Process_t * p) {
+//   Timeframe_t * currentTimeframe = p -> timeframes;
+//   while (currentTimeframe->next != NULL) {
+//     currentTimeframe = currentTimeframe->next;
+//   }
+//   return currentTimeframe->end;
+// }
+
+// compute waiting time
+int getProcessWaitingTime(Process_t * p) {
+  if (p->timeframes != NULL)
+    return p->timeframes->start - p->arrival;
+  return -1;
+}
+
+int getAverageWaitingTime(Process_t * p) {
+  Process_t * current = p;
+  int sum = 0;
+  int count = 0;
+  while (current != NULL) {
+    sum += getProcessWaitingTime(current);
+    current=current->next;
+    count++;
+  }
+  sum /= count;
+  return sum;
+}
+
+//
 // int addProcess(Process_t * process, )
 // ProcessQueue* createProcessQueue(ProcessQueue *q) {
 //     ProcessQueue * q = (ProcessQueue*) malloc (sizeof(ProcessQueue));

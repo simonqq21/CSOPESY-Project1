@@ -32,3 +32,5 @@ void addTimeFrameToProcess(Process_t ** process, Timeframe_t * timeframe);
 void printProcess(Process_t * process);
 Process_t * popProcessFromBeginning(Process_t ** processes);
 int getProcessesLength(Process_t * processes);
+int getProcessWaitingTime(Process_t * p);
+int getAverageWaitingTime(Process_t * p);
