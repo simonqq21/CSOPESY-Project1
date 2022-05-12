@@ -14,11 +14,11 @@ Timeframe_t * createTimeframe(int start, int end) {
 }
 
 void printTimeframes(Timeframe_t * t) {
-  Timeframe_t * current = t;
-  while (current != NULL) {
-    printf("start time: %d, end time: %d |", t->start, t->end);
-    current=current->next;
-  }
+    Timeframe_t * current = t;
+    while (current != NULL) {
+        printf("start time: %d, end time: %d |", current->start, current->end);
+        current=current->next;
+    }
 }
 
 Process_t * createProcess(int pid, int arrival, int burst) {
@@ -34,7 +34,7 @@ Process_t * createProcess(int pid, int arrival, int burst) {
 
 void printProcess(Process_t * process) {
   if (process != NULL) {
-    // printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
+    printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
     printf("P[%d] ", process->pid);
     if (process->timeframes != NULL)
       printTimeframes(process->timeframes);
@@ -69,24 +69,20 @@ Process_t * insertProcess(Process_t ** processes, Process_t * p) {
     }
 
     else {
-        printf("Inside else\n");
         int newArrival = p->arrival;
         int newPid = p->pid;
         int firstArrival = (*processes)->arrival;
         int firstPid = (*processes)->pid;
         int nextArrival;
         int nextPid;
-        printf("After assignment Inside else\n");
         // else if new process must be inserted before the head
         if (newArrival < firstArrival || (newArrival == firstArrival && newPid < firstPid)) {
-            printf("Inside if newArrival < firstArrival \n");
             p->next = *processes;
             *processes = p;
         }
 
         // else, insert the new process before the process with a higher arrival time
         else {
-            printf("Inside ELSE OF if newArrival < firstArrival \n");
             Process_t * current;
             current = *processes;
             if (current->next != NULL) {
