@@ -1,1 +1,1 @@
-extern void sjf(Process_t *processList);
+extern void sjf(Process_t *processList, int numProcesses);
