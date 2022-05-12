@@ -13,9 +13,7 @@ Process_t * fcfs(Process_t * processes, int processCount) {
 	while (executingProcess != NULL || processCount > 0) {
 		// get processes that have arrived
 		if (processes != NULL && processes->arrival <= time) {
-			// printf("x");
 			newProcess = popProcessFromBeginning(&processes);
-			// printf("p");
 			newProcess->next = NULL;
 			if (newProcess != NULL) {
 				readyProcesses= insertProcess(&readyProcesses, newProcess);

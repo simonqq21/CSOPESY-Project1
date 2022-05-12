@@ -23,8 +23,8 @@ int main() {
 	FILE *fp; //file pointer
 	int nSchedAlgo, processCount, timeSlice; // variables for first line
 	int pid, arrival, burst;
-	Process_t * processes;
-	Process_t * resultingProcesses;
+	Process_t *processes = NULL;
+	Process_t *resultingProcesses;
 	int validInput = 0;
 	int count = 0;
 	// printf("Input the name of the input text file: ");
@@ -40,7 +40,9 @@ int main() {
 		if(validInput) {
 			while(!feof(fp) && count < processCount) {
 				fscanf(fp, "%d %d %d\n", &pid, &arrival, &burst);
-				Process_t * tP;
+				printf("----------------------\n");
+				printf("Values read: %d, %d, %d\n", pid, arrival, burst);
+				Process_t *tP = NULL;
 				tP = createProcess(pid, arrival, burst);
 				printf("\n----------\n");
 				printf("HELLO: %d %d %d\n", tP->pid, tP->arrival, tP->burst);
@@ -76,8 +78,8 @@ int main() {
 			//if SRTF
 			case 2:
 				printf("SRTF algorithm will be performed\n");
-				srtf(processes);
-			break;
+				srtf(processes, processCount);
+				break;
 			//if RR
 			case 3:
 				printf("RR algorithm will be performed\n");

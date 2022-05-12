@@ -1,1 +1,1 @@
-extern void srtf(Process_t *);
+Process_t * srtf(Process_t *, int);
