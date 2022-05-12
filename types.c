@@ -71,7 +71,7 @@ Process_t * insertProcess(Process_t ** processes, Process_t * p) {
         nextArrival = current->next->arrival;
         nextPid = current->next->pid;
       }
-      while (current->next != NULL && newArrival >= nextArrival && newPid > nextPid) {
+      while (current->next != NULL && (newArrival > nextArrival || (newArrival == nextArrival && newPid > nextPid) )) {
         current = current->next;
         if (current->next != NULL) {
           nextArrival = current->next->arrival;

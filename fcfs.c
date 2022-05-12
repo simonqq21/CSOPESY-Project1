@@ -14,11 +14,12 @@ void fcfs(Process_t * processes) {
 			newProcess->next = NULL;
 			if (newProcess != NULL)
 				readyProcesses= insertProcess(&readyProcesses, newProcess);
+				printProcesses(readyProcesses);
 		}
 
 		time += 1;
 	}
 	printf("\n");
 	printf("%d", time);
-	printProcesses(readyProcesses);
+
 }
