@@ -6,6 +6,8 @@
 #include "sjf.h"
 #include "srtf.h"
 #include "rr.h"
+
+/* This function is used to return if the process count or the time slice is a valid input */
 int isValidInput(int processCount, int timeSlice) {
 	int result = 0;
 	if((3 <= processCount && processCount <= 100) && (1 <= timeSlice && timeSlice <= 100)) 
@@ -27,7 +29,7 @@ int main() {
 	// printf("Input the name of the input text file: ");
 	// scanf("%s", fileName);
 	// for testing
-	strcpy(fileName, "sample4.txt");
+	strcpy(fileName, "sample3.txt");
 	fp = fopen(fileName, "r");
 
 	if (fp != NULL) {
@@ -70,7 +72,7 @@ int main() {
 			//if SRTF
 			case 2:
 				printf("SRTF algorithm will be performed\n");
-				sjf(processes);
+				srtf(processes);
 			break;
 			//if RR
 			case 3:
