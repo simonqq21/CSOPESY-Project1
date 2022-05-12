@@ -105,7 +105,8 @@ Process_t * insertProcess(Process_t ** processes, Process_t * p) {
                 nextPid = current->next->pid;
                 }
             }
-            p->next=current->next;
+            if (current->next != NULL)
+              p->next=current->next;
             current->next=p;
         }
     }
@@ -130,6 +131,7 @@ Process_t * popProcessWithPid(Process_t ** processes, int pid) {
   Process_t * p = NULL;
   int nextPid;
   if (*processes != NULL) {
+    printf("x");
     current = *processes;
     if (current->next != NULL) {
       nextPid = current->next->pid;
