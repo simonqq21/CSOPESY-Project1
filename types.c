@@ -33,18 +33,15 @@ Process_t * createProcess(int pid, int arrival, int burst) {
 }
 
 void printProcess(Process_t * process) {
-  int waitingTime;
+  int waitingTime = getProcessWaitingTime(process);
   if (process != NULL) {
     printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
-    waitingTime = getProcessWaitingTime(process);
-    if (waitingTime >0)
-      printf("P[%d] ", process->pid);
+    printf("P[%d] ", process->pid);
     if (process->timeframes != NULL)
       printTimeframes(process->timeframes);
 
     // print waiting time
-    waitingTime = getProcessWaitingTime(process);
-    if (waitingTime >0)
+    if (waitingTime > -1)
       printf(" Waiting time: %d", waitingTime);
   }
 
@@ -68,8 +65,8 @@ void printProcesses(Process_t * processes) {
           printf("Average waiting time: %d", avgWaitingTime);
           printf("\n");
         }
-
     }
+
 }
 
 
@@ -156,7 +153,8 @@ Process_t * popProcessWithPid(Process_t ** processes, int pid) {
     // printProcess(current->next);
       while (nextPid != pid && current->next != NULL) {
         current = current->next;
-        nextPid = current->next->pid;
+        if (current->next != NULL)
+          nextPid = current->next->pid;
       // // printf("%d\n", nextPid);
       // // printf("p");
       }
@@ -169,9 +167,9 @@ Process_t * popProcessWithPid(Process_t ** processes, int pid) {
 
     // }
     }
-
   }
-  p->next = NULL;
+  if (p != NULL)
+    p->next = NULL;
   return p;
 }
 
@@ -191,10 +189,10 @@ void addTimeFrameToProcess(Process_t ** process, Timeframe_t * timeframe) {
     if ((*process)->timeframes == NULL)
         (*process)->timeframes = timeframe;
     else {
-        Timeframe_t * current = (*process)->timeframes->next;
-        while (current != NULL)
+        Timeframe_t * current = (*process)->timeframes;
+        while (current->next != NULL)
           current = current->next;
-        current = timeframe;
+        current->next = timeframe;
     }
 }
 
@@ -208,9 +206,11 @@ void addTimeFrameToProcess(Process_t ** process, Timeframe_t * timeframe) {
 
 // compute waiting time of a process
 int getProcessWaitingTime(Process_t * p) {
+  Timeframe_t * current = p->timeframes;
+  int waiting = 0;
   if (p->timeframes != NULL)
-    return p->timeframes->start - p->arrival;
-  return -1;
+    waiting = p->timeframes->start - p->arrival;
+  return waiting;
 }
 
 // get average waiting time of a linked list of processes

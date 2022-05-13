@@ -8,7 +8,8 @@ Process_t * srtf(Process_t * processes, int processCount) {
 	Process_t * executingProcess = NULL;
 	Process_t * finishedProcesses = NULL;
 	Timeframe_t * newtf = NULL;
-	int shortestPid, prevShortestPid;
+	int shortestPid = -1;
+	int prevShortestPid = -1;
 	int shortestBurst;
 	Process_t * current;
 	// time loop until there are no more processes
@@ -27,7 +28,6 @@ Process_t * srtf(Process_t * processes, int processCount) {
 		if (executingProcess != NULL) {
 			readyProcesses = insertProcess(&readyProcesses, executingProcess);
 			executingProcess = NULL;
-			newtf = NULL;
 		}
 
 		// get the pid of the process with the smallest remaining burst time
@@ -42,19 +42,28 @@ Process_t * srtf(Process_t * processes, int processCount) {
 			current = current->next;
 		}
 
-		// create new timeframe
-		if (prevShortestPid != shortestPid || newtf == NULL) {
+		printProcesses(readyProcesses);
+		// printf("pppppppppps");
+		/* if the PID of the process with the shortest burst time is not equal to the
+		 PID of the previous process with the shortest burst time, get the previous shortest
+		 process, add the timeframe, and put it back into the ready processes */
+		if (prevShortestPid != shortestPid && prevShortestPid > -1) {
 			// add timeframe to process before it is returned to ready queue
 			executingProcess = popProcessWithPid(&readyProcesses, prevShortestPid);
-			addTimeFrameToProcess(&executingProcess, newtf);
-			readyProcesses = insertProcess(&readyProcesses, executingProcess);
-			prevShortestPid = shortestPid;
-			
+			if (executingProcess != NULL) {
+				addTimeFrameToProcess(&executingProcess, newtf);
+				readyProcesses = insertProcess(&readyProcesses, executingProcess);
+				prevShortestPid = shortestPid;
+				newtf = NULL;
+			}
+		}
 
+		// create new timeframe
+		if (newtf == NULL) {
 			newtf = createTimeframe(time, time);
 		}
 
-		printProcesses(readyProcesses);
+
 		// get the process with the smallest remaining burst time
 		executingProcess = popProcessWithPid(&readyProcesses, shortestPid);
 		printProcess(executingProcess);
@@ -67,13 +76,18 @@ Process_t * srtf(Process_t * processes, int processCount) {
 			executingProcess->burst--;
 			newtf->end++;
 			time += 1;
+			prevShortestPid = executingProcess->pid;
 		}
 
+		printTimeframes(newtf);
 		// move finished process to finished processes list
 		if (executingProcess->burst == 0) {
+			addTimeFrameToProcess(&executingProcess, newtf);
 			finishedProcesses = insertProcess(&finishedProcesses, executingProcess);
+			executingProcess = NULL;
 			newtf = NULL;
 		}
+
 		printf("--------\n");
 	}
 	printf("\n");
