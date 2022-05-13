@@ -124,6 +124,8 @@ Process_t * popProcessFromBeginning(Process_t ** processes) {
     p = *processes;
     *processes = (*processes)->next;
   }
+  if (p != NULL)
+    p->next = NULL;
   return p;
 }
 
@@ -207,9 +209,14 @@ void addTimeFrameToProcess(Process_t ** process, Timeframe_t * timeframe) {
 // compute waiting time of a process
 int getProcessWaitingTime(Process_t * p) {
   Timeframe_t * current = p->timeframes;
-  int waiting = 0;
-  if (p->timeframes != NULL)
-    waiting = p->timeframes->start - p->arrival;
+  int waiting = -1;
+  if (current != NULL) {
+    waiting = current->start - p->arrival;
+    while(current->next != NULL) {
+      waiting += current->next->start - current->end;
+      current = current->next;
+    }
+  }
   return waiting;
 }
 
