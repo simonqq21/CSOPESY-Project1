@@ -77,9 +77,9 @@ void printProcesses(Process_t * processes) {
 and PID ascending */
 Process_t * insertProcess(Process_t ** processes, Process_t * p) {
     // if processes linked list is empty
-    printf("!!!!Process address: %p\n", *processes);
+    // printf("!!!!Process address: %p\n", *processes);
     if (*processes == NULL) {
-        printf("Inside null\n");
+        // printf("Inside null\n");
         *processes=p;
     }
 
@@ -137,34 +137,41 @@ Process_t * popProcessWithPid(Process_t ** processes, int pid) {
   Process_t * p = NULL;
   int nextPid;
 
+  // if processes is not empty
   if (*processes != NULL) {
     current = *processes;
-    if (current->pid == pid && current->next == NULL) {
+    // if only one process and its PID matches
+    if (current->pid == pid) {
       // printf("xs");
-      // printProcess(*processes);
       p=current;
-      *processes = (*processes)->next;
-
+      if (current->next != NULL)
+        *processes = (*processes)->next;
+      else
+        *processes = NULL;
     }
-    else if (current->next != NULL)
-    {
+    // else if there is more than one process
+    else if (current->next != NULL) {
       nextPid = current->next->pid;
     // printf("%d\n", nextPid);
-
     // printProcess(current->next);
       while (nextPid != pid && current->next != NULL) {
         current = current->next;
         nextPid = current->next->pid;
-      // printf("%d\n", nextPid);
-      // printf("p");
+      // // printf("%d\n", nextPid);
+      // // printf("p");
       }
       p = current->next;
-      current->next = current->next->next;
+      if (current->next != NULL) {
+        printf("d");
+        current->next = current->next->next;
+      }
+      // printProcess(current->next);
+
     // }
     }
 
   }
-
+  p->next = NULL;
   return p;
 }
 
