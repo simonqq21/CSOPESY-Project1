@@ -60,9 +60,9 @@ void printProcesses(Process_t * processes) {
             printProcess(current);
             current=current->next;
         } while(current != NULL);
-        int avgWaitingTime = getAverageWaitingTime(processes);
+        float avgWaitingTime = getAverageWaitingTime(processes);
         if (avgWaitingTime > 0) {
-          printf("Average waiting time: %d", avgWaitingTime);
+          printf("Average waiting time: %0.1f", avgWaitingTime);
           printf("\n");
         }
     }
@@ -221,10 +221,10 @@ int getProcessWaitingTime(Process_t * p) {
 }
 
 // get average waiting time of a linked list of processes
-int getAverageWaitingTime(Process_t * p) {
+float getAverageWaitingTime(Process_t * p) {
   Process_t * current = p;
-  int sum = 0;
-  int count = 0;
+  float sum = 0;
+  float count = 0;
   while (current != NULL) {
     sum += getProcessWaitingTime(current);
     current=current->next;

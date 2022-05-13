@@ -27,5 +27,5 @@ void printProcess(Process_t * process);
 Process_t * popProcessFromBeginning(Process_t ** processes);
 int getProcessesLength(Process_t * processes);
 int getProcessWaitingTime(Process_t * p);
-int getAverageWaitingTime(Process_t * p);
+float getAverageWaitingTime(Process_t * p);
 Process_t * popProcessWithPid(Process_t ** processes, int pid);
