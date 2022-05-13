@@ -73,7 +73,6 @@ void printProcesses(Process_t * processes) {
 and PID ascending */
 Process_t * insertProcess(Process_t ** processes, Process_t * p) {
     // if processes linked list is empty
-    printf("!!!!Process address: %p\n", *processes);
     if (*processes == NULL) {
         printf("Inside null\n");
         *processes=p;
