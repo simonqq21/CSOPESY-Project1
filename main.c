@@ -78,7 +78,8 @@ int main() {
 			//if SRTF
 			case 2:
 				printf("SRTF algorithm will be performed\n");
-				srtf(processes, processCount);
+				resultingProcesses = srtf(processes, processCount);
+				printProcesses(resultingProcesses);
 				break;
 			//if RR
 			case 3:

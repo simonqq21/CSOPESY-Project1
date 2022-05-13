@@ -162,7 +162,7 @@ Process_t * popProcessWithPid(Process_t ** processes, int pid) {
       }
       p = current->next;
       if (current->next != NULL) {
-        printf("d");
+        // printf("d");
         current->next = current->next->next;
       }
       // printProcess(current->next);
