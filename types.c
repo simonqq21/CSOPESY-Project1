@@ -35,6 +35,7 @@ Process_t * createProcess(int pid, int arrival, int burst) {
 void printProcess(Process_t * process) {
   int waitingTime = getProcessWaitingTime(process);
   if (process != NULL) {
+    // for debugging
     printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
     printf("P[%d] ", process->pid);
     if (process->timeframes != NULL)
