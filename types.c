@@ -234,6 +234,11 @@ float getAverageWaitingTime(Process_t * p) {
   return sum;
 }
 
+void initQueue(Queues *q) {
+    q->head = NULL;
+    q->tail = NULL;
+}
+
 //
 // int addProcess(Process_t * process, )
 // ProcessQueue* createProcessQueue(ProcessQueue *q) {
