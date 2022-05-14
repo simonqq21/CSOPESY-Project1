@@ -4,11 +4,6 @@
 #include "sjf.h"
 
 
-void initQueue(Queues *q) {
-    q->head = NULL;
-    q->tail = NULL;
-}
-
 /*  This function deletes a specific process from the process list 
     @param pid the process id to be deleted
     @param **processList pointer to the pointer to the head of the list of processes passed to the function
@@ -70,28 +65,28 @@ Process_t *searchArrivedShortestProcess (int currTime, Process_t *processList) {
 */
 void enqueueAndExecuteProcess(Process_t *process, Queues *queue, int *currTime) {
     int start, end;
-    Process_t *newnode = malloc(sizeof(Process_t));
+    Process_t *newProcess = malloc(sizeof(Process_t));
 
-    if(newnode == NULL) {
+    if(newProcess == NULL) {
         printf("Memory not allocated.\n");
     } else {
         //Initialization of node to be enqueued
-        newnode->pid = process->pid;
-        newnode->arrival = process->arrival;
-        newnode->burst = process->burst;
-        newnode->next = NULL;
+        newProcess->pid = process->pid;
+        newProcess->arrival = process->arrival;
+        newProcess->burst = process->burst;
+        newProcess->next = NULL;
         start = *currTime;
-        end = start + newnode->burst;
+        end = start + newProcess->burst;
         *currTime = end;
-        newnode->timeframes = createTimeframe(start, end);
+        newProcess->timeframes = createTimeframe(start, end);
         //Previous tail connects to new node
         if(queue->tail != NULL) {
-            queue->tail->next = newnode;
+            queue->tail->next = newProcess;
         }
-        queue->tail = newnode; //newnode is the new tail
+        queue->tail = newProcess; //newProcess is the new tail
         //If currently no head
         if (queue->head == NULL) {
-            queue->head = newnode;
+            queue->head = newProcess;
         }
     }
 }
