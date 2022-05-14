@@ -30,12 +30,14 @@ int main() {
 	// printf("Input the name of the input text file: ");
 	// scanf("%s", fileName);
 	// for testing
-	strcpy(fileName, "sample1.txt");
+	strcpy(fileName, "sjf.txt");
 	fp = fopen(fileName, "r");
 
 	if (fp != NULL) {
 		fscanf(fp, "%d %d %d", &nSchedAlgo, &processCount, &timeSlice);
 		printf("Numbers from file: %d, %d, %d\n", nSchedAlgo, processCount, timeSlice);
+		if(nSchedAlgo != 3)
+			timeSlice = 1;
 		validInput = isValidInput(processCount, timeSlice);
 		if(validInput) {
 			while(!feof(fp) && count < processCount) {
@@ -85,7 +87,7 @@ int main() {
 			//if RR
 			case 3:
 				printf("RR algorithm will be performed\n");
-				rr(processes);
+				rr(processes, processCount, timeSlice);
 				break;
 		}
 
