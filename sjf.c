@@ -11,7 +11,7 @@ void initQueue(Queues *q) {
 
 /*  This function deletes a specific process from the process list 
     @param pid the process id to be deleted
-    @param *processList pointer to the head of the list of processes passed to the function
+    @param **processList pointer to the pointer to the head of the list of processes passed to the function
     @param numProcesses number of processes in the list of processes
 */
 int deleteProcess(int pid, Process_t ** processList, int numProcesses) {
@@ -65,7 +65,8 @@ Process_t *searchArrivedShortestProcess (int currTime, Process_t *processList) {
 /*  This function enqueues the shortest burst arrived process to another list and 
     executes by adjusting Timeframe parameters
     @param process the process to be executed and inserted in list of executed processes
-    @param *executedProcessList pointer to the head of the list of executed processes
+    @param *queue pointer to the head of the list of executed processes
+    @param *currTime pointer to the variable containing the current unit time of process execution
 */
 void enqueueAndExecuteProcess(Process_t *process, Queues *queue, int *currTime) {
     int start, end;
