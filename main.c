@@ -30,7 +30,7 @@ int main() {
 	// printf("Input the name of the input text file: ");
 	// scanf("%s", fileName);
 	// for testing
-	strcpy(fileName, "sample1.txt");
+	strcpy(fileName, "exercise1_2.txt");
 	fp = fopen(fileName, "r");
 
 	if (fp != NULL) {
@@ -55,7 +55,7 @@ int main() {
 			processCount = count; //in case number of processes do not match the one from the input
 			printf("\n----Printing Processes----\n");
 			printProcesses(processes);
-			
+
 		switch (nSchedAlgo) {
 			//if FCFS
 			case 0:
