@@ -34,3 +34,5 @@ int getProcessesLength(Process_t * processes);
 int getProcessWaitingTime(Process_t * p);
 float getAverageWaitingTime(Process_t * p);
 Process_t * popProcessWithPid(Process_t ** processes, int pid);
+void initQueue(Queues *q);
+int deleteProcess(int pid, Process_t **processList, int numProcesses);
