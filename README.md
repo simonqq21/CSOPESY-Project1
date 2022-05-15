@@ -5,7 +5,7 @@ The program implements a simulation of the following basic CPU scheduling algori
 3. Shortest-Remaining-Time-First (SRTF)
 4. Round-Robin (RR)
 
-## Authors:
+## Authors
 - Simon Que
 - William Dimaculangan
 

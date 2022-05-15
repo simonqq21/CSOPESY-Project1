@@ -26,11 +26,10 @@ int main() {
 	Process_t *resultingProcesses;
 	int validInput = 0;
 	int count = 0;
-	
+
 	printf("Input the name of the input text file: ");
 	scanf("%s", fileName);
 	// for testing
-	// strcpy(fileName, "test1.txt");
 	fp = fopen(fileName, "r");
 
 	if (fp != NULL) {
