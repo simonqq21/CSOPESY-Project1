@@ -14,7 +14,6 @@ int isValidInput(int processCount, int timeSlice) {
 		result = 1;
 	else
 		result = 0;
-
 	return result;
 }
 
@@ -27,38 +26,30 @@ int main() {
 	Process_t *resultingProcesses;
 	int validInput = 0;
 	int count = 0;
-	// printf("Input the name of the input text file: ");
-	// scanf("%s", fileName);
+	
+	printf("Input the name of the input text file: ");
+	scanf("%s", fileName);
 	// for testing
-	strcpy(fileName, "rr.txt");
+	// strcpy(fileName, "test1.txt");
 	fp = fopen(fileName, "r");
 
 	if (fp != NULL) {
 		fscanf(fp, "%d %d %d", &nSchedAlgo, &processCount, &timeSlice);
-		printf("Numbers from file: %d, %d, %d\n", nSchedAlgo, processCount, timeSlice);
 		if(nSchedAlgo != 3)
 			timeSlice = 1;
 		validInput = isValidInput(processCount, timeSlice);
 		if(validInput) {
 			while(!feof(fp) && count < processCount) {
 				fscanf(fp, "%d %d %d\n", &pid, &arrival, &burst);
-				printf("----------------------\n");
-				printf("Values read: %d, %d, %d\n", pid, arrival, burst);
 				Process_t *tP = NULL;
 				tP = createProcess(pid, arrival, burst);
-				printf("\n----------\n");
-				printf("HELLO: %d %d %d\n", tP->pid, tP->arrival, tP->burst);
-				printf("----------\n");
-				// printProcess(tP);
 				processes = insertProcess(&processes, tP);
-				printProcesses(processes);
+
 				count++;
 			}
 			processCount = count; //in case number of processes do not match the one from the input
-			printf("\n----Printing Processes----\n");
-			printProcesses(processes);
 
-		switch (nSchedAlgo) {
+			switch (nSchedAlgo) {
 			//if FCFS
 			case 0:
 				printf("FCFS algorithm will be performed\n");
@@ -75,8 +66,8 @@ int main() {
 				break;
 			//if SJF
 			case 1:
-				printf("SJF algorithm will be performed\n");
 				sjf(processes, processCount);
+				break;
 			break;
 			//if SRTF
 			case 2:
@@ -86,14 +77,12 @@ int main() {
 				break;
 			//if RR
 			case 3:
-				printf("RR algorithm will be performed\n");
 				rr(processes, processCount, timeSlice);
 				break;
 		}
-
 			fclose(fp);
 		} else {
-			printf("Invalid input has been found in the first line of the text file. Try again.");
+			printf("Invalid input has been found in the first line of the text file. Try again.\n");
 		}
 	} else {
 		printf("%s not found.\n", fileName);
