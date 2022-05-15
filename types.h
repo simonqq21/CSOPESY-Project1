@@ -17,6 +17,11 @@ typedef struct Process{
 	struct Process * next;
 } Process_t;
 
+typedef struct Queues {
+    Process_t *head;
+    Process_t *tail;
+} Queues;
+
 Timeframe_t * createTimeframe(int start, int end);
 void printTimeframes(Timeframe_t * t);
 Process_t * createProcess(int pid, int arrival, int burst);
@@ -29,3 +34,5 @@ int getProcessesLength(Process_t * processes);
 int getProcessWaitingTime(Process_t * p);
 float getAverageWaitingTime(Process_t * p);
 Process_t * popProcessWithPid(Process_t ** processes, int pid);
+void initQueue(Queues *q);
+int deleteProcess(int pid, Process_t **processList, int numProcesses);

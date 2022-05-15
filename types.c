@@ -66,7 +66,7 @@ void printProcesses(Process_t * processes) {
         } while(current != NULL);
         float avgWaitingTime = getAverageWaitingTime(processes);
         if (avgWaitingTime > 0) {
-          printf("Average waiting time: %0.3f", avgWaitingTime);
+          printf("Average waiting time: %0.1f", avgWaitingTime);
           printf("\n");
         }
     }
@@ -236,6 +236,42 @@ float getAverageWaitingTime(Process_t * p) {
   }
   sum /= count;
   return sum;
+}
+
+void initQueue(Queues *q) {
+    q->head = NULL;
+    q->tail = NULL;
+}
+
+/*  This function deletes a specific process from the process list 
+    @param pid the process id to be deleted
+    @param **processList pointer to the pointer to the head of the list of processes passed to the function
+    @param numProcesses number of processes in the list of processes
+*/
+int deleteProcess(int pid, Process_t ** processList, int numProcesses) {
+    Process_t *tmp = *processList;
+    Process_t *nextNode;
+    int found = 0;
+    
+    //if head will be deleted
+    if(tmp->pid == pid) {
+        *processList = tmp->next; //new head will be the head's next element
+        if(*processList != NULL) //prevent garbage values from being printed
+            free(tmp); 
+        numProcesses = numProcesses - 1;
+    } else {
+        while (tmp != NULL && !found) {
+            nextNode = tmp->next;
+            if(nextNode->pid == pid) {
+                tmp->next = nextNode->next;
+                free(nextNode);
+                numProcesses = numProcesses - 1;
+                found = 1;
+            }
+            tmp = tmp->next;
+        }
+    }
+    return numProcesses;
 }
 
 //

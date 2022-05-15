@@ -36,6 +36,8 @@ int main() {
 	if (fp != NULL) {
 		fscanf(fp, "%d %d %d", &nSchedAlgo, &processCount, &timeSlice);
 		printf("Numbers from file: %d, %d, %d\n", nSchedAlgo, processCount, timeSlice);
+		if(nSchedAlgo != 3)
+			timeSlice = 1;
 		validInput = isValidInput(processCount, timeSlice);
 		if(validInput) {
 			while(!feof(fp) && count < processCount) {
@@ -85,7 +87,7 @@ int main() {
 			//if RR
 			case 3:
 				printf("RR algorithm will be performed\n");
-				rr(processes);
+				rr(processes, processCount, timeSlice);
 				break;
 		}
 

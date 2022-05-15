@@ -4,42 +4,6 @@
 #include "sjf.h"
 
 
-void initQueue(Queues *q) {
-    q->head = NULL;
-    q->tail = NULL;
-}
-
-/*  This function deletes a specific process from the process list 
-    @param pid the process id to be deleted
-    @param *processList pointer to the head of the list of processes passed to the function
-    @param numProcesses number of processes in the list of processes
-*/
-int deleteProcess(int pid, Process_t ** processList, int numProcesses) {
-    Process_t *tmp = *processList;
-    Process_t *nextNode;
-    int found = 0;
-    
-    //if head will be deleted
-    if(tmp->pid == pid) {
-        *processList = tmp->next; //new head will be the head's next element
-        if(*processList != NULL) //prevent garbage values from being printed
-            free(tmp); 
-        printf("Address of freed temp: %p\n", tmp);
-        numProcesses = numProcesses - 1;
-    } else {
-        while (tmp != NULL && !found) {
-            nextNode = tmp->next;
-            if(nextNode->pid == pid) {
-                tmp->next = nextNode->next;
-                free(nextNode);
-                numProcesses = numProcesses - 1;
-                found = 1;
-            }
-            tmp = tmp->next;
-        }
-    }
-    return numProcesses;
-}
 /*  This function searches the shortest burst process that has already arrived
     @param currTime current unit time of process execution
     @param *processList pointer to the head of the list of processes passed to the function
@@ -65,32 +29,33 @@ Process_t *searchArrivedShortestProcess (int currTime, Process_t *processList) {
 /*  This function enqueues the shortest burst arrived process to another list and 
     executes by adjusting Timeframe parameters
     @param process the process to be executed and inserted in list of executed processes
-    @param *executedProcessList pointer to the head of the list of executed processes
+    @param *queue pointer to the head of the list of executed processes
+    @param *currTime pointer to the variable containing the current unit time of process execution
 */
 void enqueueAndExecuteProcess(Process_t *process, Queues *queue, int *currTime) {
     int start, end;
-    Process_t *newnode = malloc(sizeof(Process_t));
+    Process_t *newProcess = malloc(sizeof(Process_t));
 
-    if(newnode == NULL) {
+    if(newProcess == NULL) {
         printf("Memory not allocated.\n");
     } else {
         //Initialization of node to be enqueued
-        newnode->pid = process->pid;
-        newnode->arrival = process->arrival;
-        newnode->burst = process->burst;
-        newnode->next = NULL;
+        newProcess->pid = process->pid;
+        newProcess->arrival = process->arrival;
+        newProcess->burst = process->burst;
+        newProcess->next = NULL;
         start = *currTime;
-        end = start + newnode->burst;
+        end = start + newProcess->burst;
         *currTime = end;
-        newnode->timeframes = createTimeframe(start, end);
+        newProcess->timeframes = createTimeframe(start, end);
         //Previous tail connects to new node
         if(queue->tail != NULL) {
-            queue->tail->next = newnode;
+            queue->tail->next = newProcess;
         }
-        queue->tail = newnode; //newnode is the new tail
+        queue->tail = newProcess; //newProcess is the new tail
         //If currently no head
         if (queue->head == NULL) {
-            queue->head = newnode;
+            queue->head = newProcess;
         }
     }
 }
@@ -117,7 +82,7 @@ void printExecutedQueue(Queues *queue) {
         }
         free(temp);
     }
-    printf("Average waiting time: %f\n", aveWaiting);
+    printf("Average waiting time: %.1f\n", aveWaiting);
 }
 
 /*  Main function that performs SJF 
