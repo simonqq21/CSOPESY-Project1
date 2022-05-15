@@ -9,8 +9,10 @@ Process_t * fcfs(Process_t * processes, int processCount) {
 	Process_t * executingProcess = NULL;
 	Process_t * finishedProcesses = NULL;
 	Timeframe_t * newtf = NULL;
+	printProcesses(processes);
 	// time loop until there are no more processes
 	while (executingProcess != NULL || processCount > 0) {
+		// printf("%d\n", processCount);
 		// get processes that have arrived
 		if (processes != NULL && processes->arrival <= time) {
 			newProcess = popProcessFromBeginning(&processes);
