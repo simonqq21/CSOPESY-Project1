@@ -36,14 +36,17 @@ void printProcess(Process_t * process) {
   int waitingTime = getProcessWaitingTime(process);
   if (process != NULL) {
     // for debugging
-    printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
-    printf("P[%d] ", process->pid);
-    if (process->timeframes != NULL)
-      printTimeframes(process->timeframes);
+    if (process->burst > 0)
+      printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
+    else {
+      printf("P[%d] ", process->pid);
+      if (process->timeframes != NULL)
+        printTimeframes(process->timeframes);
 
-    // print waiting time
-    if (waitingTime > -1)
-      printf(" Waiting time: %d", waitingTime);
+      // print waiting time
+      if (waitingTime > -1)
+        printf(" Waiting time: %d", waitingTime);
+    }
   }
 
   else
