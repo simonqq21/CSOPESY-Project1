@@ -177,7 +177,7 @@ void printRoundRobinResult(Queues *queue) {
 		printf(" | Waiting time: %d\n", getProcessWaitingTime(dequeuedNode));
 		dequeuedNode = dequeue(queue);
 	}
-	printf("Average waiting time: %f\n", aveWaiting);
+	printf("Average waiting time: %.1f\n", aveWaiting);
 }
 
 /*	This function executes the processes using the round robin algorithm

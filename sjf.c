@@ -82,7 +82,7 @@ void printExecutedQueue(Queues *queue) {
         }
         free(temp);
     }
-    printf("Average waiting time: %f\n", aveWaiting);
+    printf("Average waiting time: %.1f\n", aveWaiting);
 }
 
 /*  Main function that performs SJF 

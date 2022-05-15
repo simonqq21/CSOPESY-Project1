@@ -63,7 +63,7 @@ void printProcesses(Process_t * processes) {
         } while(current != NULL);
         float avgWaitingTime = getAverageWaitingTime(processes);
         if (avgWaitingTime > 0) {
-          printf("Average waiting time: %0.3f", avgWaitingTime);
+          printf("Average waiting time: %0.1f", avgWaitingTime);
           printf("\n");
         }
     }
