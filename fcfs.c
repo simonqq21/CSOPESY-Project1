@@ -19,7 +19,8 @@ Process_t * fcfs(Process_t * processes, int processCount) {
 				readyProcesses= insertProcess(&readyProcesses, newProcess);
 				processCount--;
 			}
-			// printProcesses(readyProcesses);
+			printProcesses(readyProcesses);
+			printf("--------\n");
 		}
 
 		// create new timeframe
@@ -40,6 +41,7 @@ Process_t * fcfs(Process_t * processes, int processCount) {
 
 		// move finished process to finished processes list
 		else if (executingProcess->burst == 0) {
+			printTimeframes(newtf);
 			addTimeFrameToProcess(&executingProcess, newtf);
 			finishedProcesses = insertProcess(&finishedProcesses, executingProcess);
 			executingProcess = popProcessFromBeginning(&readyProcesses);

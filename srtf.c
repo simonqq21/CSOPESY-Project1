@@ -43,7 +43,6 @@ Process_t * srtf(Process_t * processes, int processCount) {
 		}
 
 		printProcesses(readyProcesses);
-		// printf("pppppppppps");
 		/* if the PID of the process with the shortest burst time is not equal to the
 		 PID of the previous process with the shortest burst time, get the previous shortest
 		 process, add the timeframe, and put it back into the ready processes */
@@ -68,8 +67,6 @@ Process_t * srtf(Process_t * processes, int processCount) {
 		executingProcess = popProcessWithPid(&readyProcesses, shortestPid);
 		printProcess(executingProcess);
 		printf("short=%d\n", shortestPid);
-
-
 
 		// execute one time unit of the current executing process
 		if (executingProcess != NULL && executingProcess->burst > 0) {

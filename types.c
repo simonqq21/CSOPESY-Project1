@@ -35,6 +35,7 @@ Process_t * createProcess(int pid, int arrival, int burst) {
 void printProcess(Process_t * process) {
   int waitingTime = getProcessWaitingTime(process);
   if (process != NULL) {
+    // for debugging
     printf("pid=%d, arrival=%d, burst=%d\n", process->pid, process->arrival, process->burst);
     printf("P[%d] ", process->pid);
     if (process->timeframes != NULL)
@@ -62,7 +63,7 @@ void printProcesses(Process_t * processes) {
         } while(current != NULL);
         float avgWaitingTime = getAverageWaitingTime(processes);
         if (avgWaitingTime > 0) {
-          printf("Average waiting time: %0.1f", avgWaitingTime);
+          printf("Average waiting time: %0.3f", avgWaitingTime);
           printf("\n");
         }
     }
@@ -76,7 +77,6 @@ Process_t * insertProcess(Process_t ** processes, Process_t * p) {
     // if processes linked list is empty
     // printf("!!!!Process address: %p\n", *processes);
     if (*processes == NULL) {
-        // printf("Inside null\n");
         *processes=p;
     }
 
@@ -101,7 +101,8 @@ Process_t * insertProcess(Process_t ** processes, Process_t * p) {
                 nextArrival = current->next->arrival;
                 nextPid = current->next->pid;
             }
-            while (current->next != NULL && newArrival >= nextArrival && newPid > nextPid) {
+            while (current->next != NULL && (newArrival > nextArrival ||
+              ( newArrival == nextArrival && newPid > nextPid))) {
                 current = current->next;
                 if (current->next != NULL) {
                     nextArrival = current->next->arrival;

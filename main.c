@@ -57,7 +57,7 @@ int main() {
 			processCount = count; //in case number of processes do not match the one from the input
 			printf("\n----Printing Processes----\n");
 			printProcesses(processes);
-			
+
 		switch (nSchedAlgo) {
 			//if FCFS
 			case 0:
