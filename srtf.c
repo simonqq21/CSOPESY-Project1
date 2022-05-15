@@ -15,6 +15,13 @@ Process_t * srtf(Process_t * processes, int processCount) {
 	// time loop until there are no more processes
 	while (executingProcess != NULL || processCount > 0 || readyProcesses != NULL) {
 		// get processes that have arrived
+		if (processes != NULL)
+			while (readyProcesses == NULL && processes->arrival > time &&
+				executingProcess == NULL) {
+				printf("%d\n", time);
+				time++;
+			}
+
 		if (processes != NULL && processes->arrival <= time) {
 			newProcess = popProcessFromBeginning(&processes);
 			newProcess->next = NULL;
@@ -62,7 +69,6 @@ Process_t * srtf(Process_t * processes, int processCount) {
 			newtf = createTimeframe(time, time);
 		}
 
-
 		// get the process with the smallest remaining burst time
 		executingProcess = popProcessWithPid(&readyProcesses, shortestPid);
 		printProcess(executingProcess);
@@ -72,7 +78,7 @@ Process_t * srtf(Process_t * processes, int processCount) {
 		if (executingProcess != NULL && executingProcess->burst > 0) {
 			executingProcess->burst--;
 			newtf->end++;
-			time += 1;
+			time++;
 			prevShortestPid = executingProcess->pid;
 		}
 

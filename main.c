@@ -30,6 +30,7 @@ int main() {
 	printf("Input the name of the input text file: ");
 	scanf("%s", fileName);
 	// for testing
+	// strcpy(fileName, "exercise1_3.txt");
 	fp = fopen(fileName, "r");
 
 	if (fp != NULL) {
