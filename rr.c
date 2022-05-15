@@ -77,7 +77,7 @@ Process_t *dequeue(Queues *queue) {
 
 
 /*	This function enqueues the arrived processes to the ready queue of the function
-	@param currTime the current time of the 
+	@param *currTime pointer to the current execution time
 	@param *queue points to the address of the queue
 */
 void enqueueArrivedProcesses(int *currTime, Process_t ** processList, Queues *queue, int *numProcesses) {
@@ -136,6 +136,9 @@ Process_t *executeReadyQueue(Queues *readyQueue, int *currTime, int timeSlice, i
 	return dequeuedNode;
 }
 
+/*	This function checks if the queue is empty or not
+	@param *queue is a pointer to the queue
+*/
 int queueIsEmpty(Queues *queue) {
 	int result = 1;
 	if(queue->head != NULL && queue->tail != NULL)
@@ -143,6 +146,9 @@ int queueIsEmpty(Queues *queue) {
 	return result;
 }
 
+/*	This function checks if the list of processes is empty or not
+	@param *queue is a pointer to the processList
+*/
 int listIsEmpty(Process_t *processList) {
 	int result = 1;
 	if(processList != NULL)
@@ -150,6 +156,9 @@ int listIsEmpty(Process_t *processList) {
 	return result;
 }
 
+/* This function prints the executed processes
+	@param *queue pointer to the queue
+*/
 void printRoundRobinResult(Queues *queue) {
 	Process_t *dequeuedNode;
 	Timeframe_t *tempTime;
@@ -171,13 +180,18 @@ void printRoundRobinResult(Queues *queue) {
 	printf("Average waiting time: %f\n", aveWaiting);
 }
 
+/*	This function executes the processes using the round robin algorithm
+	@param *processList pointer to the list of processes
+	@param numProcesses total number of processes
+	@param timeSlice time quantum needed for executing algorithm
+*/
 void rr(Process_t * processList, int numProcesses, int timeSlice) {
 	int currTime = 0;
 	Process_t *dequeuedNode;
 	Queues readyQueue;
 	Queues finishedQueue;
 	int finish = 0;
-	int iteration = 0;
+
 	//Array of structs to store original burst time for calculation later on
 	ProcessIDBurst *processIdAndBurst = malloc(numProcesses * sizeof(ProcessIDBurst)); 
 
@@ -201,7 +215,6 @@ void rr(Process_t * processList, int numProcesses, int timeSlice) {
 		//If everything is already empty
 		if (queueIsEmpty(&readyQueue) == 1 && listIsEmpty(processList) == 1) 
 			finish = 1;
-		iteration++;
 	}
 	printRoundRobinResult(&finishedQueue);
 
