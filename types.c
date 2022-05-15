@@ -55,7 +55,6 @@ void printProcess(Process_t * process) {
 }
 
 void printProcesses(Process_t * processes) {
-    printf("List of processes\n");
     Process_t * current = processes;
     if (current == NULL)
         printf("no processes\n");
@@ -78,7 +77,7 @@ void printProcesses(Process_t * processes) {
 and PID ascending */
 Process_t * insertProcess(Process_t ** processes, Process_t * p) {
     // if processes linked list is empty
-    // printf("!!!!Process address: %p\n", *processes);
+
     if (*processes == NULL) {
         *processes=p;
     }
@@ -155,23 +154,17 @@ Process_t * popProcessWithPid(Process_t ** processes, int pid) {
     // else if there is more than one process
     else if (current->next != NULL) {
       nextPid = current->next->pid;
-    // printf("%d\n", nextPid);
-    // printProcess(current->next);
       while (nextPid != pid && current->next != NULL) {
         current = current->next;
         if (current->next != NULL)
           nextPid = current->next->pid;
-      // // printf("%d\n", nextPid);
-      // // printf("p");
       }
       p = current->next;
       if (current->next != NULL) {
         // printf("d");
         current->next = current->next->next;
       }
-      // printProcess(current->next);
 
-    // }
     }
   }
   if (p != NULL)
@@ -201,14 +194,6 @@ void addTimeFrameToProcess(Process_t ** process, Timeframe_t * timeframe) {
         current->next = timeframe;
     }
 }
-
-// int getProcessCompletionTime(Process_t * p) {
-//   Timeframe_t * currentTimeframe = p -> timeframes;
-//   while (currentTimeframe->next != NULL) {
-//     currentTimeframe = currentTimeframe->next;
-//   }
-//   return currentTimeframe->end;
-// }
 
 // compute waiting time of a process
 int getProcessWaitingTime(Process_t * p) {
@@ -273,69 +258,3 @@ int deleteProcess(int pid, Process_t ** processList, int numProcesses) {
     }
     return numProcesses;
 }
-
-//
-// int addProcess(Process_t * process, )
-// ProcessQueue* createProcessQueue(ProcessQueue *q) {
-//     ProcessQueue * q = (ProcessQueue*) malloc (sizeof(ProcessQueue));
-//     q -> head = q -> tail = NULL;
-//     return q;
-// };
-//
-// int enqueue(ProcessQueue *q, int pid, int arrival, int burst) {
-//     Process_t *newProcess = malloc(sizeof(Process_t));
-//     if(newProcess == NULL) {
-//         return 0; //0 for false
-//     } else {
-//         newProcess->pid = pid;
-//         newProcess->arrival = arrival;
-//         newProcess->burst = burst;
-//         newProcess->next = NULL;
-//         Timeframe_t *timeframes = malloc(sizeof(timeframes));
-//         newProcess->timeframes = timeframes; //check
-//
-//         //If there is existing tail connect
-//         if (q->tail != NULL) {
-//             q->tail->next = newProcess;
-//         }
-//         q->tail = newProcess; //new tail
-//
-//         //If queue is empty
-//         if (q->head == NULL) {
-//             q->head = newProcess; //point to new process
-//         }
-//         return 1; //return true
-//     }
-// }
-//
-// int dequeue(ProcessQueue *q) {
-//
-//     //Check if queue is empty
-//     if(q->head == NULL)
-//         return -999;
-//     else {
-//         //save head temporarily
-//         Process_t *temp = q->head;
-//         //get info from head
-//         int pid = temp->pid;
-//         int arrival = temp->arrival;
-//         int burst = temp->burst;
-//
-//         //remove from list
-//         q->head = q->head->next; //the node before it is the new head since FIFO
-//         if (q->head == NULL) {
-//             q->tail = NULL;
-//         }
-//         free(temp);
-//     }
-// }
-//
-// /* get the size of the queue */
-// int queueSize
-// /* get the process within a process queue with the minimum arrival time */
-// int minIndex(ProcessQueue *q) {
-//
-// }
-
-// processes from file will be read one at a time
-// once a process is read, it will be inserted in its sorted location in the linked list

@@ -102,7 +102,6 @@ void sjf(Process_t *processList, int numProcesses) {
         if(temp != NULL &&  temp->arrival <= currTime) {
             enqueueAndExecuteProcess(temp, &executedQueue, &currTime);
             numProcesses = deleteProcess(temp->pid, &processList, numProcesses);
-            printProcesses(processList);
         } else {
             if(temp != NULL) 
                 free(temp); //free process that will not be used anymore   

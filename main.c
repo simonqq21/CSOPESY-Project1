@@ -52,7 +52,6 @@ int main() {
 			switch (nSchedAlgo) {
 			//if FCFS
 			case 0:
-				printf("FCFS algorithm will be performed\n");
 				resultingProcesses = fcfs(processes, processCount);
 				printProcesses(resultingProcesses);
 				break;
@@ -63,7 +62,6 @@ int main() {
 			break;
 			//if SRTF
 			case 2:
-				printf("SRTF algorithm will be performed\n");
 				resultingProcesses = srtf(processes, processCount);
 				printProcesses(resultingProcesses);
 				break;
